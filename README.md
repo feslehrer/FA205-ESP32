@@ -52,12 +52,12 @@ Das ESP32-Carrier-Board ist mit den GPIO-Nummern bedruckt. Für die Technische R
 
 
 ### FA205-Prototypen:
-+**delay.h**
++ **delay.h**
 ```c
 void delay_100us ( uint16_t mikrosec);
 void delay_ms    ( uint16_t millisec);
 ```
-+**in_out.h**
++ **in_out.h**
 ```c
 void    bit_init   ( uint8_t byte_adr, uint8_t bitnr, uint8_t direction );
 uint8_t bit_read   ( uint8_t byte_adr, uint8_t bitnr );
@@ -76,7 +76,7 @@ void    adc_init   ( void );    // 8-Bit
 uint8_t adc_in1    ( void );
 uint8_t adc_in2    ( void );
 ```
-+**interrupt.h**
++ **interrupt.h**
 ```c
 //externer Interrupt
 void ext_interrupt_init    ( void (*ip) (void));        // ip = ext_interrupt_isr (Standard)
@@ -91,7 +91,7 @@ void timer1ms_enable       ( void );
 void timer1ms_disable      ( void );
 void timer1ms_isr          ( void );                    // Muss im Sketch definiert werden. 
 ```
-+**lcd.h**
++ **lcd.h**
 ```c
 void lcd_init      ( void );                            // Initialisierung des Displays
 void lcd_clear     ( void );                            // Displayanzeige löschen
@@ -107,7 +107,7 @@ void lcd_byte      ( uint8_t  value  );                 // Rechtsbündige Ausgab
 void lcd_int       ( uint16_t value  );                 // dito.
                                                         // value = Word (16 bit) 0 ... 65535
 ```
-+**communication.h**
++ **communication.h**
 ```c
 // I2C-Schnittstelle
 void    i2c_init    ( void );                   // Initialisierung
