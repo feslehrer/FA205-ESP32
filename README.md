@@ -44,9 +44,10 @@ Zu beachten ist, dass ein sogenannter **Repeated-Start** ohne **i2c_stop()** nur
 <img src="https://user-images.githubusercontent.com/24614659/235747329-3b294437-124a-4d40-9fe2-bfb1395ae811.jpg" alt="ESP32-Carrier-Board" width="600">
 https://www.ase-schlierbach.de
 
-### FA205-Portbelegungen
+### FA205-Portbelegungen für ESP32-Carrier-Board
 Das ESP32-Carrier-Board ist mit den GPIO-Nummern bedruckt. Für die Technische Richtlinie müssen daher die GPIO-Nummern entsprechend dem abgebildeten Schema ersetzt werden.
 ![grafik](https://github.com/feslehrer/FA205-ESP32/assets/24614659/1c8c2d08-f31d-4599-abae-578df174580d)
+<img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/1c8c2d08-f31d-4599-abae-578df174580d.jpg" alt="FA205 Pinbelegung" width="500">
 
 ### FA205-Prototypen:
 + **delay.h**
