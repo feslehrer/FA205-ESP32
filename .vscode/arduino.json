@@ -1,0 +1,6 @@
+{
+    "configuration": "PartitionScheme=default,UploadSpeed=921600,DebugLevel=none",
+    "board": "esp32:esp32:pico32",
+    "port": "COM24",
+    "sketch": "FA205-ESP32.ino"
+}

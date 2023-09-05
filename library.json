@@ -1,0 +1,26 @@
+{
+"name": "FA205Library",
+"frameworks": "Arduino",
+"keywords": "",
+"description": "Implementation der Technischen Richtline FA205",
+"authors":
+[
+    {
+        "name": "Rolf.Rahm",
+        "email": "rahm@fes-es.de",
+        "url": "",
+        "maintainer": true
+    },
+    {
+        "name": ""
+    },
+    {
+        "name": ""
+    }
+],
+"repository":
+{
+    "type": "git",
+    "url": "https://github.com/"
+}
+}

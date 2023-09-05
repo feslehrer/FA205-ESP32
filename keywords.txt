@@ -1,0 +1,311 @@
+#######################################
+# Syntax Coloring Map For controller
+# Trennzeichen ist ein Tabulator!!
+#######################################
+
+#######################################
+# Library (KEYWORD3)
+#######################################
+controller	KEYWORD3
+delay		KEYWORD3
+in_out		KEYWORD3
+interrupt	KEYWORD3
+lcd		KEYWORD3
+communication	KEYWORD3
+dht11		KEYWORD3
+ds1302		KEYWORD3
+eeprom		KEYWORD3
+datalogger	KEYWORD3
+mp3player	KEYWORD3
+nunchuk		KEYWORD3
+rc522		KEYWORD3
+rtc		KEYWORD3
+spi		KEYWORD3
+srf04		KEYWORD3
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+#communication.h
+i2c_init	KEYWORD2
+i2c_start	KEYWORD2
+i2c_rstart	KEYWORD2
+i2c_stop	KEYWORD2
+i2c_write	KEYWORD2
+i2c_read	KEYWORD2
+rs232_init	KEYWORD2
+rs232_get	KEYWORD2
+rs232_put	KEYWORD2
+rs232_print	KEYWORD2
+rs232_baud	KEYWORD2
+rs232_inputdd	KEYWORD2
+rs232_printdd	KEYWORD2
+rs232_int	KEYWORD2
+rs232_binary_get	KEYWORD2
+rs232_readbytes	KEYWORD2
+rs232_is_received	KEYWORD2
+
+#delay.h
+delay_100us	KEYWORD2
+delay_ms	KEYWORD2
+delay_us	KEYWORD2
+delay_s		KEYWORD2
+
+#in_out.h
+bit_init	KEYWORD2
+byte_init	KEYWORD2
+bit_read	KEYWORD2
+bit_write	KEYWORD2
+byte_read	KEYWORD2
+byte_write	KEYWORD2
+pwm_init	KEYWORD2
+pwm_start	KEYWORD2
+pwm_stop	KEYWORD2
+pwm_duty_cycle	KEYWORD2
+adc_init	KEYWORD2
+adc_in1	KEYWORD2
+adc_in2	KEYWORD2
+bit_toggle	KEYWORD2
+pwm2_init	KEYWORD2
+pwm2_start	KEYWORD2
+pwm2_stop	KEYWORD2
+pwm2_duty_cycle	KEYWORD2
+pwm3_init	KEYWORD2
+pwm3_start	KEYWORD2
+pwm3_stop	KEYWORD2
+pwm3_duty_cycle	KEYWORD2
+adc_init	KEYWORD2
+adc_in1	KEYWORD2
+adc_in2	KEYWORD2
+adc_in	KEYWORD2
+adc_in10	KEYWORD2
+
+#interrupt.h
+ext_interrupt_init	KEYWORD2
+ext_interrupt_enable	KEYWORD2
+ext_interrupt_disable	KEYWORD2
+timer1ms_init	KEYWORD2
+timer1ms_enable	KEYWORD2
+timer1ms_disable	KEYWORD2
+ext_interrupt1_init	KEYWORD2
+ext_interrupt1_enable	KEYWORD2
+ext_interrupt1_disable	KEYWORD2
+ext_interrupt1_isr	KEYWORD2
+serial_interrupt_init	KEYWORD2
+serial_interrupt_enable	KEYWORD2
+serial_interrupt_disable	KEYWORD2
+serial_interrupt_isr	KEYWORD2
+timer_ms_init	KEYWORD2
+timer_ms_enable	KEYWORD2
+timer_ms_disable	KEYWORD2
+timer_ms_isr	KEYWORD2
+sound_init	KEYWORD2
+play_note	KEYWORD2
+note_on	KEYWORD2
+note_off	KEYWORD2
+
+#lcd.h
+lcd_init	KEYWORD2
+lcd_clear	KEYWORD2
+lcd_setcursor	KEYWORD2
+lcd_print	KEYWORD2
+lcd_print	KEYWORD2
+lcd_char	KEYWORD2
+lcd_byte	KEYWORD2
+lcd_int	KEYWORD2
+lcd_defchar	KEYWORD2
+lcd_clearline	KEYWORD2
+lcd_dd	KEYWORD2
+lcd_hhhh	KEYWORD2
+lcd_debug	KEYWORD2
+
+#dht11.h
+dht11_read	KEYWORD2
+
+#ds1302.h
+ds1302_init	KEYWORD2
+ds1302_write	KEYWORD2
+ds1302_read	KEYWORD2
+ds1302_get_time	KEYWORD2
+ds1302_get_end_time	KEYWORD2
+ds1302_set_time	KEYWORD2
+ds1302_set_end_time	KEYWORD2
+
+#eeprom.h
+eeprom_init	KEYWORD2
+eeprom_write	KEYWORD2
+eeprom_read	KEYWORD2
+eeprom_memtest	KEYWORD2
+
+#mp3player.h
+mp3_init	KEYWORD2
+mp3_reset	KEYWORD2
+mp3_sleep	KEYWORD2
+mp3_getStatus	KEYWORD2
+mp3_getPlaybackMode	KEYWORD2
+mp3_getTotalTrackCount	KEYWORD2
+mp3_getFolderTrackCount	KEYWORD2
+mp3_getTotalFolderCount	KEYWORD2
+mp3_getCurrentTrack	KEYWORD2
+mp3_setVolume	KEYWORD2
+mp3_getVolume	KEYWORD2
+mp3_increaseVolume	KEYWORD2
+mp3_decreaseVolume	KEYWORD2
+mp3_setEq	KEYWORD2
+mp3_getEq	KEYWORD2
+mp3_playGlobalTrack	KEYWORD2
+mp3_start	KEYWORD2
+mp3_stop	KEYWORD2
+mp3_pause	KEYWORD2
+mp3_prevTrack	KEYWORD2
+mp3_nextTrack	KEYWORD2
+mp3_setRepeatPlay	KEYWORD2
+mp3_playRandomTrackFromAll	KEYWORD2
+mp3_loopGlobalTrack	KEYWORD2
+mp3_playFolderTrack	KEYWORD2
+mp3_playMP3FolderTrack	KEYWORD2
+mp3_setPlaybackSource	KEYWORD2
+mp3_setPlaybackMode	KEYWORD2
+mp3_playAdvertisement	KEYWORD2
+mp3_stopAdvertisement	KEYWORD2
+mp3_send_command	KEYWORD2
+mp3_receive_query	KEYWORD2
+mp3_waiting_for_reply	KEYWORD2
+
+#nunchuk.h
+nunchuk_init	KEYWORD2
+nunchuk_read	KEYWORD2
+nunchuk_debug	KEYWORD2
+
+#rc522.h
+rc522_init	KEYWORD2
+rc522_write	KEYWORD2
+rc522_read	KEYWORD2
+rc522_antenna_on	KEYWORD2
+rc522_reset	KEYWORD2
+rc522_set_bit_mask	KEYWORD2
+
+#rtc.h
+rtc_init	KEYWORD2
+rtc_write	KEYWORD2
+rtc_read	KEYWORD2
+rtc_lowlevel_write	KEYWORD2
+rtc_lowlevel_read	KEYWORD2
+
+#spi.h
+spi_init	KEYWORD2
+spi_transfer	KEYWORD2
+
+#srf04.h
+srf04_start	KEYWORD2
+srf04_stop	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+#communication.h
+ACK	LITERAL1
+NACK	LITERAL1
+BAUD	
+
+#dht11.h
+DHT11_PORT	LITERAL1
+DHT11_BIT	LITERAL1
+
+#ds1302.h
+RTC_CE	LITERAL1
+RTC_IO	LITERAL1
+RTC_CLK	LITERAL1
+RTC_PORT	LITERAL1
+SEC	LITERAL1
+MIN	LITERAL1
+HR	LITERAL1
+DATE	LITERAL1
+MONTH	LITERAL1
+DAY	LITERAL1
+YEAR	LITERAL1
+CONTROL	LITERAL1
+TRICKLECHARGE	LITERAL1
+CLOCKBURST	LITERAL1
+RAM0	LITERAL1
+RAM1	LITERAL1
+RAM2	LITERAL1
+RAM3	LITERAL1
+RAM4	LITERAL1
+RAM5	LITERAL1
+RAM6	LITERAL1
+RAM7	LITERAL1
+RAM8	LITERAL1
+
+#eeprom.h
+EEPROM_1	LITERAL1
+EEPROM_2	LITERAL1
+EEPROM_3	LITERAL1
+EEPROM_4	LITERAL1
+EEPROM_END_ADDRESS	LITERAL1
+
+#in_out.h
+IN	LITERAL1
+OUT	LITERAL1
+PORTx	LITERAL1
+PORTy	LITERAL1
+CH1	LITERAL1
+CH2	LITERAL1
+CH3	LITERAL1
+CH4	LITERAL1
+CH5	LITERAL1
+CH6	LITERAL1
+
+#interrupt.h
+TON_PORT	LITERAL1
+TON_BIT	LITERAL1
+
+#lcd.h
+LCD_LEN	LITERAL1
+
+#mp3player.h
+_C_LS_	LITERAL1
+_C_STOP_	LITERAL1
+_C_PLAY_	LITERAL1
+_C_PAUSE_	LITERAL1
+_C_FWD_	LITERAL1
+_C_RWD_	LITERAL1
+_C_REPEAT_	LITERAL1
+_C_RANDOM_	LITERAL1
+_PLAYBACK_REPEAT_	LITERAL1
+_PLAYBACK_FOLDER_REPEAT_	LITERAL1
+_PLAYBACK_SINGLE_REPEAT_	LITERAL1
+_PLAYBACK_RANDOM_	LITERAL1
+_PLAYBACK_STOP_	LITERAL1
+_PLAYBACK_PLAY_	LITERAL1
+_PLAYBACK_PAUSE_	LITERAL1
+_EQ_NORMAL_	LITERAL1
+_EQ_POP_	LITERAL1
+_EQ_ROCK_	LITERAL1
+_EQ_JAZZ_	LITERAL1
+_EQ_CLASSIC_	LITERAL1
+_EQ_BASS_	LITERAL1
+_NONE_	LITERAL1
+_TRACK_FINISHED_	LITERAL1
+_CARD_REMOVED_	LITERAL1
+_CARD_INSERTED_	LITERAL1
+_INITIALIZED_	LITERAL1
+_ERROR_	LITERAL1
+
+#rtc.h
+_SEC_	LITERAL1
+_MIN_	LITERAL1
+_HR_	LITERAL1
+_DAY_	LITERAL1
+_DATE_	LITERAL1
+_MONTH_	LITERAL1
+_YEAR_	LITERAL1
+
+
+
