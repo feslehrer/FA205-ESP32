@@ -46,11 +46,7 @@ https://www.ase-schlierbach.de
 
 ### FA205-Portbelegungen
 Das ESP32-Carrier-Board ist mit den GPIO-Nummern bedruckt. Für die Technische Richtlinie müssen daher die GPIO-Nummern entsprechend dem abgebildeten Schema ersetzt werden.
-<img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/67e561c7-5848-4925-85af-cceaaa1c8cf5.jpg" alt="ESP32-Carrier-Board" width="600">
-
-
-
-
+![grafik](https://github.com/feslehrer/FA205-ESP32/assets/24614659/1c8c2d08-f31d-4599-abae-578df174580d)
 
 ### FA205-Prototypen:
 + **delay.h**
