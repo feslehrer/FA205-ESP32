@@ -7,8 +7,12 @@ Die Richtlinie enthält:
 + C-Funktionsbibliotheken (delay, in_out, interrupt, lcd, communication)
 
 ## Installation
-+ Auf GitHubDownload der Bibliothek als Zip-Datei (<>Code --> Download Zip
-+ In 
++ Auf GitHub Resource: https://github.com/feslehrer/FA205-ESP32/tree/main:
+Download der Bibliothek als Zip-Datei (<>Code --> Download Zip
++ In der Arduino-IDE auf **Sketch --> Bibliothek einbinden --> .Zip-Bibliothek hinzufügen...**
++ Im **Sketch muss controller.h** includiert werden.
+```c #define "controller.h"
+```
 ## Implementierung für Arduino-IDE
 Die Richtlinien-Funktionen mussten für die Verwendung in der Arduino-IDE leicht modifiziert werden. Die Änderungen sind im einzelnen:
 + Da der ESP32 keine 8 Bit-Ports mehr besitzt, wurden 8 Pins zum **PORTx** zusammengefasst, damit die 8 LEDs auf dem ESP32-Carrier-Board mit einem einzigen Byte-Zugriff geschrieben werden können. 8 weitere Pins wurden zum **PORTy** zusammengefasst. Hier befinden sich u.a. die 4 Taster des ESP32-Carrier-Boards.
