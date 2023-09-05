@@ -39,6 +39,8 @@ Zu beachten ist, dass ein sogenannter **Repeated-Start** ohne **i2c_stop()** nur
   msb = i2c_data[msb]; 
   lsb = i2c_data[lsb];
 ```
+Das dekodierte Signal auf dem I2C-Bus stimmt mit dem Übertragungsprotokoll im Datenblatt überein:
+<img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/3c8e5f95-f38b-47a7-a4a0-09777ae99ceb)" alt="FA205 Pinbelegung" width="800">
 
 ## ESP32-Carrier-Board von AS-Elektronik
 <img src="https://user-images.githubusercontent.com/24614659/235747329-3b294437-124a-4d40-9fe2-bfb1395ae811.jpg" alt="ESP32-Carrier-Board" width="600">
@@ -48,6 +50,7 @@ https://www.ase-schlierbach.de
 Das ESP32-Carrier-Board ist mit den GPIO-Nummern bedruckt. 
 Für die Technische Richtlinie müssen daher die GPIO-Nummern entsprechend dem abgebildeten Schema ersetzt werden:
 <img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/d8e268ea-9d43-4b88-a48b-a15075dedd72)" alt="FA205 Pinbelegung" width="800">
+
 
 ### FA205-Prototypen:
 + **delay.h**
