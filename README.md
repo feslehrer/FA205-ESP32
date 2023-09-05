@@ -60,9 +60,9 @@ void delay_ms    ( uint16_t millisec);
 ```
 + **in_out.h**
 ```c
-void    bit_init   ( uint8_t byte_adr, uint8_t bitnr, uint8_t direction );
-uint8_t bit_read   ( uint8_t byte_adr, uint8_t bitnr );
-void    bit_write  ( uint8_t byte_adr, uint8_t bitnr, uint8_t value );
+void    bit_init   ( uint8_t port, uint8_t bitnr, uint8_t direction );
+uint8_t bit_read   ( uint8_t port, uint8_t bitnr );
+void    bit_write  ( uint8_t port, uint8_t bitnr, uint8_t value );
 
 void    byte_init  ( uint8_t port, uint8_t direction );
 uint8_t byte_read  ( uint8_t port );
@@ -113,7 +113,7 @@ void lcd_int       ( uint16_t value  );                 // dito.
 // I2C-Schnittstelle
 void    i2c_init    ( void );                   // Initialisierung
 void    i2c_start   ( void );                   // Startbedingung
-void    i2c_rstart (void);                      // Repeatet-Start. Vorherige Befehlsqueue wird ohne
+void    i2c_rstart  ( void );                   // Repeatet-Start. Vorherige Befehlsqueue wird ohne
                                                 // Stoppbedingung wird gesendet und eine erneute Startbedingung erzeugt.
 void    i2c_stop    ( void );                   // Befehlsqueue wird gesendet.
 uint8_t i2c_write   ( uint8_t value);           // value = Byte (8-Bit). Rückgabe: ACK/NACK
