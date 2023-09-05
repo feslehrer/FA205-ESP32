@@ -1,7 +1,7 @@
 # FA205-ESP32
 **Technische Richtlinie FA205**-Bibliotheken für **ESP32-Carrier-Board** und **Arduino-IDE**
 
-## Implementierung für ESP32-Carrier-Board und Arduino-IDE
+## Implementierung der Technischen Richtlinie FA205 für ESP32-Carrier-Board und Arduino-IDE
 Die Technische Richtlinie FA205 wird in Baden-Württemberg im Unterricht im Beruf **Elektroniker/in für Geräte und Systeme** eingesetzt, um einheitliche und systemunabhängige Prüfungen zu ermöglichen. 
 Die Richtlinie enthält:
 + Übersicht über die Programmiersprache C
