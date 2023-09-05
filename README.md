@@ -1,13 +1,15 @@
 # FA205-ESP32
 **Technische Richtlinie FA205**-Bibliotheken für **ESP32-Carrier-Board** und **Arduino-IDE**
-
-## Implementierung der Technischen Richtlinie FA205 für ESP32-Carrier-Board und Arduino-IDE
 Die Technische Richtlinie FA205 wird in Baden-Württemberg im Unterricht im Beruf **Elektroniker/in für Geräte und Systeme** eingesetzt, um einheitliche und systemunabhängige Abschlußprüfungen zu ermöglichen. 
 Die Richtlinie enthält:
 + Übersicht über die Programmiersprache C
 + Blockschaltbild des (Modell-)Mikrocontrollers
 + C-Funktionsbibliotheken (delay, in_out, interrupt, lcd, communication)
 
+## Installation
++ Auf GitHubDownload der Bibliothek als Zip-Datei (<>Code --> Download Zip
++ In 
+## Implementierung für Arduino-IDE
 Die Richtlinien-Funktionen mussten für die Verwendung in der Arduino-IDE leicht modifiziert werden. Die Änderungen sind im einzelnen:
 + Da der ESP32 keine 8 Bit-Ports mehr besitzt, wurden 8 Pins zum **PORTx** zusammengefasst, damit die 8 LEDs auf dem ESP32-Carrier-Board mit einem einzigen Byte-Zugriff geschrieben werden können. 8 weitere Pins wurden zum **PORTy** zusammengefasst. Hier befinden sich u.a. die 4 Taster des ESP32-Carrier-Boards.
 + Abweichend von der Definition in der Technischen Richtlinie müssen für die Funktionen **lcd_print()** und **rs232_print()** konstante Zeichenketten vom Typ **int8_t** und nicht **uint8_t** übergeben werden.
