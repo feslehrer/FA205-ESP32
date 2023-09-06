@@ -8,7 +8,7 @@
 // Autor:            Rahm
 
 #include "interrupt.h"
-//#include "math.h"
+#include "math.h"
 //#include "driver/uart.h"
 
 // Lokale initialisierungen
@@ -131,8 +131,56 @@ void timer_ms_disable( void )
   timerAlarmDisable(timer);
 }
 
-// Data Received Interrupt
+// Ab hier keine FA205-Funktionen
+
+/* Soundausgabe auf Lautsprecher an PORTy,1 (GPIO 27).
+   Verwendet timer_ms
+*/ 
+#ifndef TON_PORT
+  #define TON_PORT PORTy
+#endif
+#ifndef TON_BIT
+  #define TON_BIT 1
+#endif
+
+void sound_init(void)
+{
+    bit_init(TON_PORT,TON_BIT,OUT);
+}
+
+void note_isr( void )
+{  
+  bit_write(TON_PORT,TON_BIT,~bit_read(TON_PORT,TON_BIT));
+}
+
+void note_on(float frequenz)
+{
+  float millisec;
+  
+  millisec = 500/frequenz;    // Zeit für Halbe Periodendauer in ms
+  
+  timer_ms_init(note_isr, millisec);
+  timer_ms_enable();
+}
+
+void note_off(void)
+{
+  timer_ms_disable();
+}
+
+void play_note(uint8_t notenwert, uint16_t duration, uint16_t silence)
+{
+  float exponent = ((float)notenwert - 69.0) / 12.0;
+  float frequenz = 440 * pow(2,exponent);
+
+  note_on(frequenz);
+  delay_ms(duration);
+  note_off();
+  delay_ms(silence);
+}
+
 /*
+// Data Received Interrupt (not working yet!!)
 void IRAM_ATTR uart_isr(void *arg)  // Interrupt-Vektor
 {
   uint8_t buf;
@@ -170,54 +218,4 @@ extern void serial_interrupt_disable ( void )
 {
 	uart_disable_rx_intr(EX_UART_NUM);           // Empfangsinterrupt ausschalten
 }
-*/
-
-/*
-
-//  
-// Soundausgabe auf Lautsprecher an Port B.3
-// 
-#ifndef TON_PORT
-  #define TON_PORT _PORTB_
-#endif
-#ifndef TON_BIT
-  #define TON_BIT 3
-#endif
-
-void sound_init(void)
-{
-    bit_init(TON_PORT,TON_BIT,OUT);
-}
-
-void note_isr( void )
-{  
-  bit_write(TON_PORT,TON_BIT,~bit_read(TON_PORT,TON_BIT));
-}
-
-void note_on(float frequenz)
-{
-  float millisec;
-  
-  millisec = 500/frequenz;    // Zeit f�r Halbe Periodendauer in ms
-  
-  timer_ms_init(note_isr, millisec);
-  timer_ms_enable();
-}
-
-void note_off(void)
-{
-  timer_ms_disable();
-}
-
-void play_note(uint8_t notenwert, uint16_t duration, uint16_t silence)
-{
-  float exponent = ((float)notenwert - 69.0) / 12.0;
-  float frequenz = 440 * pow(2,exponent);
-
-  note_on(frequenz);
-  delay_ms(duration);
-  note_off();
-  delay_ms(silence);
-}
-
 */
