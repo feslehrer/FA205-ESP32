@@ -17,7 +17,7 @@ Die Richtlinie enthält:
 
 void setup(void)
 {
-  bit_init(PORTx,7,OUT);    // PORTx,7 als Ausgang initialisiweren
+  bit_init(PORTx,7,OUT);    // PORTx,7 als Ausgang initialisieren
 }
 
 void loop(void)
