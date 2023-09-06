@@ -120,8 +120,8 @@ void lcd_clear     ( void );                            // Displayanzeige lösch
 void lcd_setcursor ( uint8_t row, uint8_t column );     // Setzen der Cursorposition
                                                         // row (Zeile) = 1,2, ...
                                                         // column (Spalte) = 1,2,3, ...
-void lcd_print     ( int8_t  *text );                   // Textausgabe ab Cursorposition, bis '\0'
-                                                        // text = /0-terminierte Zeichenkatte
+void lcd_print     ( int8_t  text[] );                  // Textausgabe ab Cursorposition, bis '\0'
+                                                        // text[] = /0-terminierte Zeichenkette
 void lcd_char      ( uint8_t  value  );                 // Ausgabe eines Zeichens an der aktuellen Cursorposition
                                                         // value = ASCII-Code (8(7)-Bit)
 void lcd_byte      ( uint8_t  value  );                 // Rechtsbündige Ausgabe einer Dezimalzahl ohne führende 0
@@ -135,7 +135,7 @@ void lcd_int       ( uint16_t value  );                 // dito.
 void    i2c_init    ( void );                   // Initialisierung
 void    i2c_start   ( void );                   // Startbedingung
 void    i2c_rstart  ( void );                   // Repeatet-Start. Vorherige Befehlsqueue wird ohne
-                                                // Stoppbedingung wird gesendet und eine erneute Startbedingung erzeugt.
+                                                // Stoppbedingung gesendet und eine erneute Startbedingung erzeugt.
 void    i2c_stop    ( void );                   // Befehlsqueue wird gesendet.
 uint8_t i2c_write   ( uint8_t value);           // value = Byte (8-Bit). Rückgabe: ACK/NACK
 uint8_t i2c_read    ( uint8_t ack );            // ack = ACK/NACK.       Rückgabe: Index auf i2c_data[]
@@ -148,5 +148,6 @@ void    rs232_init  ( void );                   // In communication.h:
                                                 // _SERIALBT_ (SerialBluetooth) Gerätename: _DEVICENAME_
 uint8_t rs232_get   ( void );                   // Rückgabe ASCII-Code (8(7) Bit)
 void    rs232_put   ( uint8_t value );          // value = ASCII-Code (8(7)-Bit)
-void    rs232_print ( int8_t *text );           // text = /0-terminierte Zeichenkatte
+void    rs232_print ( int8_t text[] );          // text[] = /0-terminierte Zeichenkatte
 ```
+**Anmerkung:** In den Bibliotheken sind einige ergänzende Funktionen enthalten. Informationen dazu finden sich im jeweiligen Header-Files.
