@@ -52,21 +52,20 @@ extern void timer_ms_enable       ( void );
 extern void timer_ms_disable      ( void );
 extern void timer_ms_isr          ( void );
  
-/*
-// Routinen zur Soundausgabe an Port B.3 (Verwendet Timer 0 = timer_ms_)
+
+// Routinen zur Soundausgabe an PORTy,1 (Verwendet timer_ms_)
 // key:       Midi-Tastennummern (49 = a' = 440Hz Kammerton) 
-//                                1  = ,,A = 27,5Hz    (real sind ca. 32Hz realisierbar!)
+//                                1  = ,,A = 27,5Hz
 //                         bis    88 = a''''' = 4186,01Hz
 // duration:  Tondauer in ms
 // silence:   Ruhe nach Ton in ms
 // Änderung des Soundports hier möglich:
- #define TON_PORT _PORTB_
- #define TON_BIT  3
+ #define TON_PORT PORTy
+ #define TON_BIT  1
  extern void sound_init(void);
  extern void play_note(uint8_t key, uint16_t duration, uint16_t silence);
  // frequenz: Tonfrequenz in Hz
  extern void note_on(float frequenz);
  extern void note_off(void);
-*/
 
 #endif
