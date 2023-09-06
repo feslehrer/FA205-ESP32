@@ -7,7 +7,7 @@ Die Richtlinie enthält:
 + C-Funktionsbibliotheken (delay, in_out, interrupt, lcd, communication)
 
 ## Installation
-+ Auf GitHub Resource: https://github.com/feslehrer/FA205-ESP32/tree/main:
++ Auf GitHub Resource: https://github.com/feslehrer/FA205-ESP32.git
 <br>Download der Bibliothek als Zip-Datei (<>Code --> Download Zip)
 + In der Arduino-IDE auf **Sketch --> Bibliothek einbinden --> .Zip-Bibliothek hinzufügen...**
 + Im Sketch muss **controller.h** inkludiert werden.
@@ -28,6 +28,7 @@ void loop(void)
   delay_ms(500);             // 500ms warten
 }
 ```
+**Anmerkung:** Im Boardmanager muss das ESP32 Boardpackage installiert sein. Als Board wird **ESP32 PICO-D4** ausgewählt.
 ## Implementierung für Arduino-IDE
 Die Richtlinien-Funktionen mussten für die Verwendung in der Arduino-IDE leicht modifiziert werden. Die Änderungen sind im einzelnen:
 + Da der ESP32 keine 8 Bit-Ports mehr besitzt, wurden 8 Pins zum **PORTx** zusammengefasst, damit die 8 LEDs auf dem ESP32-Carrier-Board mit einem einzigen Byte-Zugriff geschrieben werden können. 8 weitere Pins wurden zum **PORTy** zusammengefasst. Hier befinden sich u.a. die 4 Taster des ESP32-Carrier-Boards.
@@ -71,7 +72,6 @@ https://www.ase-schlierbach.de
 Das ESP32-Carrier-Board ist mit den GPIO-Nummern bedruckt. 
 Für die Technische Richtlinie müssen daher die GPIO-Nummern entsprechend dem abgebildeten Schema ersetzt werden:
 <img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/e2039f42-ccb6-4aff-bdee-d70303c32e76)" alt="FA205 Pinbelegung" width="800">
-
 
 ### FA205-Prototypen:
 + **delay.h**
