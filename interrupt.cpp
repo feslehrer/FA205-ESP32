@@ -17,6 +17,7 @@ static uint8_t trigger;
 static hw_timer_t *timer = NULL;
 const int timerNr = 0;
 #define _DIVIDER_ 80
+void note_isr( void );
 
 // Pointer auf Interrupt-Service-Routinen
 void (*my_interrupt0) (void);
@@ -143,14 +144,16 @@ void timer_ms_disable( void )
   #define TON_BIT 1
 #endif
 
-void sound_init(void)
-{
-    bit_init(TON_PORT,TON_BIT,OUT);
-}
-
 void note_isr( void )
 {  
   bit_write(TON_PORT,TON_BIT,~bit_read(TON_PORT,TON_BIT));
+}
+
+void sound_init(void)
+{
+    bit_init(TON_PORT,TON_BIT,OUT);
+    timer_ms_init(note_isr, 1000);
+    timer_ms_disable;
 }
 
 void note_on(float frequenz)
@@ -159,7 +162,8 @@ void note_on(float frequenz)
   
   millisec = 500/frequenz;    // Zeit für Halbe Periodendauer in ms
   
-  timer_ms_init(note_isr, millisec);
+  timerAlarmWrite(timer,calculate_alarm(millisec),true);
+  //timer_ms_init(note_isr, millisec);
   timer_ms_enable();
 }
 
