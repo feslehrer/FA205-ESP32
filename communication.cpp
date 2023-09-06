@@ -70,6 +70,7 @@ void i2c_start (void)
 void i2c_rstart (void)
 {
   i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_RATE_MS); //bestehenden cmd (ohne stop) senden
+  i2c_cmd_link_delete(cmd);
   cmd = i2c_cmd_link_create();
   i2c_master_start(cmd);
 }
@@ -87,10 +88,11 @@ void i2c_stop (void)
 // ****************************************************************************************
 uint8_t i2c_write (uint8_t xbyte)
 {
-    esp_err_t ret = i2c_master_write_byte(cmd, xbyte, ACK_CHECK_EN);
+  esp_err_t ret = i2c_master_write_byte(cmd, xbyte, ACK_CHECK_EN);
 
-    if (ret == ESP_OK) return ACK;
-    else               return NACK;
+  if (ret == ESP_OK) return ACK;      // Tatsächlich wird hier nur geprüft, ob
+  else               return NACK;     // die Parameterübergabe korrekt ist.
+                                      // ack vom Slave kann erst bei i2c_stop() gecheckt werden.
 }
 
 // ****************************************************************************************
