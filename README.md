@@ -8,10 +8,25 @@ Die Richtlinie enthält:
 
 ## Installation
 + Auf GitHub Resource: https://github.com/feslehrer/FA205-ESP32/tree/main:
-Download der Bibliothek als Zip-Datei (<>Code --> Download Zip
+<br>Download der Bibliothek als Zip-Datei (<>Code --> Download Zip)
 + In der Arduino-IDE auf **Sketch --> Bibliothek einbinden --> .Zip-Bibliothek hinzufügen...**
-+ Im **Sketch muss controller.h** includiert werden.
-```c #define "controller.h"
++ Im Sketch muss **controller.h** inkludiert werden.
+<br>Beispiel: Blink-Sketch mit FA205-Funktionen
+```c
+#include "controller.h"     // FA205-Bibliotheken einbinden
+
+void setup(void)
+{
+  bit_init(PORTx,7,OUT);    // PORTx,7 als Ausgang initialisiweren
+}
+
+void loop(void)
+{
+  bit_write(PORTx,7,0);      // PORTx,7 --> 0
+  delay_ms(500);             // 500ms warten
+  bit_write(PORTx,7,1);      // PORTx,7 --> 1
+  delay_ms(500);             // 500ms warten
+}
 ```
 ## Implementierung für Arduino-IDE
 Die Richtlinien-Funktionen mussten für die Verwendung in der Arduino-IDE leicht modifiziert werden. Die Änderungen sind im einzelnen:
