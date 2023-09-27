@@ -32,9 +32,9 @@ void loop(void)
 ## Implementierung für Arduino-IDE
 Die Richtlinien-Funktionen mussten für die Verwendung in der Arduino-IDE leicht modifiziert werden. Die Änderungen sind im einzelnen:
 + Da der ESP32 keine 8 Bit-Ports mehr besitzt, wurden 8 Pins zum **PORTx** zusammengefasst, damit die 8 LEDs auf dem ESP32-Carrier-Board mit einem einzigen Byte-Zugriff geschrieben werden können. 8 weitere Pins wurden zum **PORTy** zusammengefasst. Hier befinden sich u.a. die 4 Taster des ESP32-Carrier-Boards.
-+ Abweichend von der Definition in der Technischen Richtlinie müssen für die Funktionen **lcd_print()** und **rs232_print()** konstante Zeichenketten vom Typ **int8_t** und nicht **uint8_t** übergeben werden.
++ Abweichend von der Definition in der Technischen Richtlinie müssen für die Funktionen **lcd_print()** und **rs232_print()** konstante Zeichenketten vom Typ **char** und nicht **uint8_t** übergeben werden.
 ```c
-int8_t text[] = "Hallo Welt";     // Definition als int8_t und nicht uint8_t
+char text[] = "Hallo Welt";     // Definition als char und nicht uint8_t
 
 lcd_print ( text );
 rs232_print ( text );
@@ -120,7 +120,7 @@ void lcd_clear     ( void );                            // Displayanzeige lösch
 void lcd_setcursor ( uint8_t row, uint8_t column );     // Setzen der Cursorposition
                                                         // row (Zeile) = 1,2, ...
                                                         // column (Spalte) = 1,2,3, ...
-void lcd_print     ( int8_t  text[] );                  // Textausgabe ab Cursorposition, bis '\0'
+void lcd_print     ( const char  text[] );              // Textausgabe ab Cursorposition, bis '\0'
                                                         // text[] = /0-terminierte Zeichenkette
 void lcd_char      ( uint8_t  value  );                 // Ausgabe eines Zeichens an der aktuellen Cursorposition
                                                         // value = ASCII-Code (8(7)-Bit)
@@ -148,6 +148,6 @@ void    rs232_init  ( void );                   // In communication.h:
                                                 // _SERIALBT_ (SerialBluetooth) Gerätename: _DEVICENAME_
 uint8_t rs232_get   ( void );                   // Rückgabe ASCII-Code (8(7) Bit)
 void    rs232_put   ( uint8_t value );          // value = ASCII-Code (8(7)-Bit)
-void    rs232_print ( int8_t text[] );          // text[] = /0-terminierte Zeichenkatte
+void    rs232_print ( const char text[] );      // text[] = /0-terminierte Zeichenkatte
 ```
 **Anmerkung:** In den Bibliotheken sind einige ergänzende Funktionen enthalten. Informationen dazu finden sich im jeweiligen Header-Files.
