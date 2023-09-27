@@ -22,15 +22,6 @@
 #define PORTx 1
 #define PORTy 2
 
-// ... für PWM
-// Der PWM-Ausgang ist standardmäßig Pin 2  (LC-Backlight PWM)
-#define PWM_PIN 2
-
-// ... für ADC
-#define CH0 38   // Kanal 1
-#define CH1 37   // Kanal 2
-#define CH2 35   // Kanal 3
-#define CH3 34   // Kanal 4: Poti, LDR auf ESP32-Carrier-Board
 //*******************************************************************************
 
 // Funktionsprototypen für Bit- und Byte Ein-/Ausgabe
@@ -51,16 +42,16 @@ void    pwm_start  ( void );
 void    pwm_stop   ( void );
 void    pwm_duty_cycle ( uint8_t value);
 
-void    pwmx_init  ( uint8_t bitnr );
-void    pwmx_start ( uint8_t bitnr );
-void    pwmx_stop  ( uint8_t bitnr );
-void    pwmx_duty_cycle ( uint8_t bitnr, uint8_t value);
+void    pwmx_init  ( uint8_t pin_nr );
+void    pwmx_start ( uint8_t pin_nr );
+void    pwmx_stop  ( uint8_t pin_nr );
+void    pwmx_duty_cycle ( uint8_t pin_nr, uint8_t value);
 
 // Funktionsprototypen für AD-Wandler
 void    adc_init   ( void );    // 8-Bit
 uint8_t adc_in1    ( void );
 uint8_t adc_in2    ( void );
 
-uint8_t  adc_in    ( uint8_t channel );  // ADC  (8 Bit) mit freier Kanalwahl (CH1...CH6)
-uint16_t adc_in12  ( uint8_t channel );  // dito. aber in 12Bit-Auflösung
+uint8_t  adc_in    ( uint8_t pin_nr );  // ADC  (8 Bit) mit freier Kanalwahl (CH1...CH6)
+uint16_t adc_in12  ( uint8_t pin_nr );  // dito. aber in 12Bit-Auflösung
 #endif

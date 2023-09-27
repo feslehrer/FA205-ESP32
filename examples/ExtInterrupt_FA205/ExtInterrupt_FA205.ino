@@ -5,7 +5,7 @@
  Datei:            ExtInterrupt_FA205.ino
  Autor:            Baier/Rahm
  Datum:            04.10.2015
- Letzte Änderung:  05.09.2023
+ Letzte Änderung:  27.09.2023
  
  Hinweis: Standardmäßig liegt der externe Interrupt an GPIO_14 */
 
@@ -39,7 +39,7 @@ void setup (void)
   ext_interrupt_init( ext_interrupt_isr );    // ext_interrupt_isr ohne () !!!
                                               // Der Funktionsname ist ein Pointer auf die Funktion 
   ext_interrupt_enable();
-  rs232_init();
+  //rs232_init();
 }
 
 void loop (void)
@@ -55,8 +55,7 @@ void loop (void)
 void ext_interrupt_isr(void)
 {        
   zustand = !zustand;
-  if(zustand==0)
-    rs232_print("LEDs ein\r\n");
-  else
-    rs232_print("LEDs aus\r\n");
+  
+  // Vorsicht: Die ISR sollte möglichst schnell beendet
+  //           werden, sonst gibt's Watchdog Timeout-Error !!
 }

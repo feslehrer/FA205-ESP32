@@ -3,14 +3,34 @@
 // Controller:       ESP32
 // Version:          1.0
 // erstellt am:      9.8.2023
-// letzte Änderung:  11.8.2023
+// letzte Änderung:  27.9.2023
 // Autor:            Rahm
 
 #include "in_out.h"
 #include <arduino.h>
 
-const int portx[] = {9,10,14,4,33,15,13,32};
-const int porty[] = {2,27,5,23,19,18,36,39};
+#if defined(_ESP32_CARRIER_BOARD_)   //ESP32-Carrier-Board
+  const int portx[] = {9,10,14,4,33,15,13,32};
+  const int porty[] = {2,27,5,23,19,18,36,39};
+  const int pwm_channel[] = {2,27,5,23,19,18,9,10,14,4,33,15,13,32};
+  #define PWM_PIN 2     // LCD-Backlight
+  #define ADC1_PIN 34   // CH1: Poti/LDR/Exp.-Port
+  #define ADC2_PIN 38   // CH2: Exp.-Port
+#elif defined(_ESP32_ESPRIT_BOARD_)   //ESP32-Esprit-Board
+  const int portx[] = {16,17,2,27,25,26,15,13};	
+  const int porty[] = {12,14,5,23,19,18,33,32};
+  const int pwm_channel[] = {23,12,14,5,19,18,16,17,2,27,26,25,15,13};
+  #define PWM_PIN 23   // LCD-Backlight an Arduino-Carrier-Board
+  #define ADC1_PIN 39  // CH1: Poti/LDR/Exp.-Port
+  #define ADC2_PIN 36  // CH2: Exp.-Port
+#else   //default: ESP32-Carrier-Board
+  const int portx[] = {9,10,14,4,33,15,13,32};		
+  const int porty[] = {2,27,5,23,19,18,36,39};
+  const int pwm_channel[] = {2,27,5,23,19,18,9,10,14,4,33,15,13,32};
+  #define PWM_PIN 2     // LCD-Backlight
+  #define ADC1_PIN 34   // CH1: Poti/LDR/Exp.-Port
+  #define ADC2_PIN 38   // CH2: Exp.-Port
+#endif
 
 // Definition der Funktionen
 //***************************************************************
@@ -18,7 +38,6 @@ const int porty[] = {2,27,5,23,19,18,36,39};
 //***************************************************************
 void bit_init(uint8_t byte_adr, uint8_t bit_nr, uint8_t direction)
 {
-
   uint8_t dir;
   switch (direction)
   {
@@ -111,8 +130,6 @@ void byte_write(uint8_t byte_adr, uint8_t byte_wert)
 //***************************************************************
 // ab hier PWM-Funktionen
 //***************************************************************
-const int pwm_channel[] = {2,27,5,23,19,18,9,10,14,4,33,15,13,32};
-
 void pwmx_init( uint8_t bit_nr )
 {
   for(uint8_t i=0;i<14;i++)
@@ -121,6 +138,11 @@ void pwmx_init( uint8_t bit_nr )
     {
       ledcSetup(i,1000,8);
       ledcWrite(i,127);
+	  #ifdef PWM_DEBUG
+	   rs232_init();
+	   rs232_print("\n\rPWM init on GPIO: ");rs232_byte(bit_nr);
+	   rs232_print("\n\r      on Channel: ");rs232_byte(i);	  
+	  #endif
       return;
     }
   }
@@ -133,6 +155,9 @@ void pwmx_start( uint8_t bit_nr )
     if (pwm_channel[i]==bit_nr)
     {
       ledcAttachPin(bit_nr,i);
+	  #ifdef PWM_DEBUG
+	   rs232_print("\n\rPWM start on GPIO: ");rs232_int(bit_nr);
+	  #endif
       return;
     }
   }
@@ -145,6 +170,9 @@ void pwmx_stop( uint8_t bit_nr )
     if (pwm_channel[i]==bit_nr)
     {
       ledcDetachPin(bit_nr);
+	  #ifdef PWM_DEBUG
+	   rs232_print("\n\rPWM stop on GPIO: ");rs232_int(bit_nr);
+	  #endif
       return;
     }
   }
@@ -156,6 +184,9 @@ void pwmx_duty_cycle ( uint8_t bit_nr, uint8_t value )
     if (pwm_channel[i]==bit_nr)
     {
       ledcWrite(i,value);
+	  #ifdef PWM_DEBUG
+	    rs232_print("\n\rPWM dutycycle: ");rs232_int(value);
+	  #endif
       return;
     }
   }
@@ -190,29 +221,44 @@ void pwm_duty_cycle ( uint8_t value )
 // Initialisierung des ADU.
 void adc_init(void)
 {
-
+  #ifdef ADC_DEBUG
+   rs232_init();
+   rs232_print("\r\nADC init");
+  #endif	 
 }
 
 // Einlesen des ADC-Kanals 1
 uint8_t adc_in1( void )
 {
-  return (adc_in(CH3));
+  return (adc_in(ADC1_PIN));
 }
 
 // Einlesen des ADC-Kanals 2
 uint8_t adc_in2( void )
 {
-  return (adc_in(CH0));
+  return (adc_in(ADC2_PIN));
 }
 
 // Funktion mit Kanal-Parameter
-uint8_t adc_in(uint8_t ch)
+uint8_t adc_in(uint8_t pin_nr)
 {
-  return ((uint8_t) (analogRead(ch)>>4));
+  uint8_t temp = (uint8_t) (adc_in12(pin_nr)>>4);
+  
+  #ifdef ADC_DEBUG
+    rs232_print("\r\n 8-Bit Value: "); rs232_byte(temp);	
+  #endif
+  
+  return (temp);
 }
 
 // Gibt den 12 Bit-Wert des ADC zurück. Funktion mit Kanal-Parameter
-uint16_t adc_in12(uint8_t ch)
+uint16_t adc_in12(uint8_t pin_nr)
 {
-  return analogRead(ch);
+  uint16_t temp = analogRead(pin_nr);
+  
+  #ifdef ADC_DEBUG
+    rs232_print("\r\nADC on GPIO: ");rs232_printdd(pin_nr);
+    rs232_print("\r\n12-Bit Value: ");rs232_int(temp);	
+  #endif
+  return temp;
 }

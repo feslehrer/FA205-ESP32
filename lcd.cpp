@@ -162,7 +162,7 @@ void lcd_char (uint8_t zeichen)
 /*****************************************************************************************
  * \0-terminierten Text an das LCD-Display ausgeben. 
  ******************************************************************************************/
-void lcd_print (int8_t *text)
+void lcd_print (const char *text)
 {
   while (*text != '\0')             // Text													
   {

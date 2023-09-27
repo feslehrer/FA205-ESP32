@@ -4,12 +4,11 @@
 //     
 // Version:          1.0
 // erstellt am:      4.9.2023
-// letzte Änderung:  4.9.2023
+// letzte Änderung:  27.9.2023
 // Autor:            Rahm
 
 #include "interrupt.h"
 #include "math.h"
-//#include "driver/uart.h"
 
 // Lokale initialisierungen
 static uint8_t trigger;
@@ -29,13 +28,27 @@ void (*my_timer)      (void);
 void ext_interrupt_init( void (*ip) (void) )
 {
   my_interrupt0 = ip;
-	#if defined(_FALLING_EDGE_TRIGGER_)
-    trigger = FALLING;
-	#elif defined(_RISING_EDGE_TRIGGER_)
-	  trigger = RISING;
+  #if defined(_FALLING_EDGE_TRIGGER_)
+   trigger = FALLING;
+  #elif defined(_RISING_EDGE_TRIGGER_)
+   trigger = RISING;
   #elif defined(_ANY_EDGE_TRIGGER_) 
-	  trigger = CHANGE;
-	#endif
+   trigger = CHANGE;
+  #endif
+
+  #ifdef INT_DEBUG
+    rs232_init();
+	rs232_print("\r\nInterrupt0 init");
+	rs232_print("\r\n  on GPIO: ");rs232_byte(_INTERRUPT_PIN0_);
+	rs232_print("\r\n  Trigger: ");
+	switch (trigger) 
+	{
+	 case 1: rs232_byte(trigger); rs232_print(" (Rising)"); break;
+	 case 2: rs232_byte(trigger); rs232_print(" (Falling)"); break;
+	 case 3: rs232_byte(trigger); rs232_print(" (Change)"); break;
+	}	
+  #endif 
+  
 }
 
 void IRAM_ATTR interrupt0_isr(void)
@@ -46,24 +59,52 @@ void IRAM_ATTR interrupt0_isr(void)
 void ext_interrupt_enable( void )
 {
   attachInterrupt(_INTERRUPT_PIN0_,interrupt0_isr,trigger);
+  #ifdef INT_DEBUG
+	rs232_print("\r\nInterrupt0 enable");
+	rs232_print("\r\n  on GPIO: ");rs232_byte(_INTERRUPT_PIN0_);
+	rs232_print("\r\n  Trigger: ");
+	switch (trigger) 
+	{
+	 case 1: rs232_byte(trigger); rs232_print(" (Rising)"); break;
+	 case 2: rs232_byte(trigger); rs232_print(" (Falling)"); break;
+	 case 3: rs232_byte(trigger); rs232_print(" (Change)"); break;
+	}	
+  #endif   
 }
 
 void ext_interrupt_disable( void )
 {
   detachInterrupt(_INTERRUPT_PIN0_);
+  #ifdef INT_DEBUG
+	rs232_print("\r\nInterrupt0 disable");
+	rs232_print("\r\n  on GPIO: ");rs232_byte(_INTERRUPT_PIN0_);
+  #endif 
 }
 
 // Externer Interrupt 1
 void ext_interrupt1_init( void (*ip) (void) )
 {
-	my_interrupt1 = ip;
-	#if defined(_FALLING_EDGE_TRIGGER_)
-    trigger = FALLING;
-	#elif defined(_RISING_EDGE_TRIGGER_)
-	  trigger = RISING;
+  my_interrupt1 = ip;
+  #if defined(_FALLING_EDGE_TRIGGER_)
+   trigger = FALLING;
+  #elif defined(_RISING_EDGE_TRIGGER_)
+   trigger = RISING;
   #elif defined(_ANY_EDGE_TRIGGER_) 
-	  trigger = CHANGE;
-	#endif
+   trigger = CHANGE;
+  #endif
+
+  #ifdef INT_DEBUG
+    rs232_init();
+	rs232_print("\r\nInterrupt1 init");
+	rs232_print("\r\n  on GPIO: ");rs232_byte(_INTERRUPT_PIN1_);
+	rs232_print("\r\n  Trigger: ");
+	switch (trigger) 
+	{
+	 case 1: rs232_byte(trigger); rs232_print(" (Rising)"); break;
+	 case 2: rs232_byte(trigger); rs232_print(" (Falling)"); break;
+	 case 3: rs232_byte(trigger); rs232_print(" (Change)"); break;
+	}
+  #endif 	
 }
 
 void IRAM_ATTR interrupt1_isr(void)
@@ -74,11 +115,26 @@ void IRAM_ATTR interrupt1_isr(void)
 void ext_interrupt1_enable( void )
 {
   attachInterrupt(_INTERRUPT_PIN1_,interrupt1_isr,trigger);
+  #ifdef INT_DEBUG
+	rs232_print("\r\nInterrupt1 enable");
+	rs232_print("\r\n  on GPIO: ");rs232_byte(_INTERRUPT_PIN1_);
+	rs232_print("\r\n  Trigger: ");
+	switch (trigger) 
+	{
+	 case 1: rs232_byte(trigger); rs232_print(" (Rising)"); break;
+	 case 2: rs232_byte(trigger); rs232_print(" (Falling)"); break;
+	 case 3: rs232_byte(trigger); rs232_print(" (Change)"); break;
+	}	
+  #endif 
 }
 
 void ext_interrupt1_disable( void )
 {
   detachInterrupt(_INTERRUPT_PIN1_);
+  #ifdef INT_DEBUG
+	rs232_print("\r\nInterrupt1 disable");
+	rs232_print("\r\n  on GPIO: ");rs232_byte(_INTERRUPT_PIN1_);
+  #endif 
 }
 
 

@@ -11,14 +11,24 @@
 
 #include "controller.h"
 
-// externer Interrupt Trigger
-//#define _RISING_EDGE_TRIGGER_     
-#define _FALLING_EDGE_TRIGGER_
-//#define _ANY_EDGE_TRIGGER_
+#if defined(_RISING_EDGE_TRIGGER_)
+#elif defined(_FALLING_EDGE_TRIGGER_)
+#elif defined(_ANY_EDGE_TRIGGER_)
+#else
+ #define _FALLING_EDGE_TRIGGER_   //default Trigger
+#endif
 
 // externer Interrupt Pins
-#define _INTERRUPT_PIN0_ 14
-#define _INTERRUPT_PIN1_  4
+#if defined(_ESP32_CARRIER_BOARD_)
+ #define _INTERRUPT_PIN0_ 14		// ESP32-Carrier-Board
+ #define _INTERRUPT_PIN1_  4
+#elif defined(_ESP32_ESPRIT_BOARD_)
+ #define _INTERRUPT_PIN0_ 2		// ESP32-Esprit-Board
+ #define _INTERRUPT_PIN1_ 27
+#else                              // default
+ #define _INTERRUPT_PIN0_ 14
+ #define _INTERRUPT_PIN1_  4
+#endif
 
 // Funktionsprototypen für externen Interrupt0
 extern void ext_interrupt_init    ( void (*ip) (void));
@@ -33,6 +43,7 @@ extern void ext_interrupt1_disable ( void );
 extern void ext_interrupt1_isr     ( void );
 
 // Funktionsprototypen für seriellen Interrupt (data received)
+// @Rah: Not yet implemented !!
 //extern void serial_interrupt_init    ( void (*sr) (void));
 //extern void serial_interrupt_enable  ( void );
 //extern void serial_interrupt_disable ( void );

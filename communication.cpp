@@ -132,11 +132,20 @@ void rs232_init(void)
 void rs232_baud ( uint32_t baud )     // Ändert die Baudrate
 {
   #if defined(_SERIAL0_)
+    Serial.end();
+	delay_ms(20);
     Serial.begin(baud);
+	while (!Serial);
   #elif defined(_SERIAL1_)
+    Serial1.end();
+	delay_ms(20);
     Serial1.begin(baud);
+	while (!Serial1);
   #elif defined(_SERIALBT_)
+    SerialBT.end();
+	delay_ms(20);
     SerialBT.begin(_DEVICENAME_);
+	while (!SerialBT);
   #endif
 }
 
@@ -168,7 +177,7 @@ void rs232_put ( uint8_t value )
   #endif
 }
 
-void rs232_print ( int8_t *text )
+void rs232_print ( const char *text )
 {
   while (*text != '\0')
   rs232_put(*text++);
@@ -208,6 +217,28 @@ void rs232_printdd(uint8_t value)
   rs232_put(buf+'0');      // 10er-Stelle anzeigen
   buf = value % 10;
   rs232_put(buf+'0');      // 1er-Stelle anzeigen
+}
+
+void rs232_byte(uint8_t val)
+{
+  uint8_t buffer[3];
+  uint8_t n = 0;	
+	
+  do
+  {
+    buffer[n++] = val%10 + '0';
+  } while ((val /= 10) > 0);
+				
+  while (n<3)               // Rest von buffer mit blank füllen
+  {
+    buffer[n++] = ' ';					
+  }
+
+  while (n > 0)             // Ausgabe auf das Display (umgekehrt)
+  {
+    n--;
+    rs232_put(buffer[n]);
+  }
 }
 
 void rs232_int(uint16_t val)

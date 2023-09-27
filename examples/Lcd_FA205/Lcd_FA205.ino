@@ -5,7 +5,7 @@
    Datei:            Lcd_FA205.ino
    Autor:            Baier/Rahm
    Datum:            04.10.2015
-   Letzte Änderung:  05.09.2023
+   Letzte Änderung:  27.09.2023
 
 Hinweis: LC-Display über PCF8574 am I2C-Bus
 */
@@ -14,7 +14,7 @@ Hinweis: LC-Display über PCF8574 am I2C-Bus
 #include "controller.h"
 
 //Globale Variable
-int8_t meinText[]="Hallo Welt!";
+char meinText[]="Hallo Welt!";
 
 void setup() 
 {
