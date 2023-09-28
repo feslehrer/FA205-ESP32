@@ -222,5 +222,18 @@ void setup (void)
   pwmx_init(4);  pwmx_start(4);     pwmx_duty_cycle(4,59);               // Farbkanal blau
 }
 ```
-
++ Anpassungen in **_interrupt.h_**
+</br>Viele GPIO's des ESP32 können als externer Interrupt verwendet werden. Die Technische Richtlinie FA205 sieht jedoch nur einen Interrupt vor. Diese Bibliothek definiert trotzdem **2** verschiedene externe Interrupts, die mit (fast) beliebigen GPIO's verknüpft werden können. Die Einstellungen für **ESP32-Carrier-Board** und **Esprit-Board** sind durch die entsprechenden Schalter vorgegeben. Eigene Einstellungen sollte wieder über den **_default_**-Zweig und das deaktivieren der Schalter **`_ESP32_CARRIER_BOARD_`** und **`_ESP32_ESPRIT_BOARD_`** in **_controller.h_** vorgenommen werden.
+```c
+#if defined(_ESP32_CARRIER_BOARD_)
+ #define _INTERRUPT_PIN0_ 14		// ESP32-Carrier-Board
+ #define _INTERRUPT_PIN1_  4
+#elif defined(_ESP32_ESPRIT_BOARD_)
+ #define _INTERRUPT_PIN0_ 2		// ESP32-Esprit-Board
+ #define _INTERRUPT_PIN1_ 27
+#else                              // default
+ #define _INTERRUPT_PIN0_ 14
+ #define _INTERRUPT_PIN1_  4
+#endif
+```
  
