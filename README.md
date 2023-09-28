@@ -153,11 +153,13 @@ void    rs232_print ( const char text[] );      // text[] = /0-terminierte Zeich
 **Anmerkung:** In den Bibliotheken sind einige ergänzende Funktionen enthalten. Informationen dazu finden sich im jeweiligen Header-Files.
 
 ## Anpassen der Bibliotheken an weitere ESP32-Hardware
-Prinzipiell ist die FA205_ESP32-Bibliothek auf allen ESP32-Controllern Lauffähig. Die Anpassung an die am Controller angeschlossene Hardware muß über die Header(*.h)- und/oder *.cpp-Bibliotheksdateien erfolgen. Eine Anpassung an das Frematics/Esprit-Board ist bereits implementiert und wird im folgenden als Vorlage für eigene Implementierungen beschrieben. Dabei kommt das in vielen Schulen bereits verwendete Arduino-Carrier-Board (https://www.ase-schlierbach.de) zum Einsatz. Folgendes Pinout des Esprit-Boards wird dabei implementiert:
+Prinzipiell ist die FA205_ESP32-Bibliothek auf allen ESP32-Controllern lauffähig. Die Anpassung an die am Controller angeschlossene Hardware erfolgt über die Header(*.h)- und/oder *.cpp-Bibliotheksdateien. Diese befindet sich nach der Installation der Bibliothek normalerweise im Ordner **_libraries/FA205_ESP32_** des eingestellten Arduino-Sketch-Sketchordners. Eine Anpassung an das häufig eingesetzte **Frematics/Esprit-Board** ist bereits implementiert und wird im folgenden als Vorlage für eigene Implementierungen beschrieben. Dabei kommt das in vielen Schulen bereits verwendete **Arduino-Carrier-Board** (https://www.ase-schlierbach.de) zum Einsatz, womit sich folgendes Pinout des **Esprit-Boards** ergibt:
+</br>
 <img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/15df384f-cf3e-455e-b0a4-cdff2d5bae4d" alt="Pinout ESP32-Esprit-Board" width="600">
-Die Bibliotheksdateien sind normalerweise im Ordner ***libraries/FA205_ESP32*** im Arduino-Sketch-Sketchordner zu finden.
-+ Anpassungen in ***controller.h***
-</br>Für das ESP32-Esprit-Board in Komination mit dem Arduino-Carrier-Board muss lediglich der Schalter **_ESP32_ESPRIT_BOARD_** entkommentiert werden und der Schalter **_ESP32_CARRIER_BOARD_** auskommentiert werden. Als weitere Einstellungen können hier (jeweils durch Auskommentierung) der Trigger für die beiden externen Interrupts gewählt werden. Ebenso wird eine Serielle Schnittstelle für die rs232-Richtlinienfunktionen gewählt. Bei der Wahl der seriellen Bluetooth-Verbindung **_SERIALBT_** muss ein eindeutiger Gerätenamen (**_DEVICENAME_**) verwendet werden, was insbesondere bei der Verwendung mit vielen Nutzern im Klassenzimmer/Labor wichtig ist. Ebenso kann hier auch die ***Baudrate*** für die Serielle Schnittstelle geändert werden. An dieser Stelle kann auch die Ausgabe von Debug-Meldungen für PWM-, ADC- und Externer Interrupt aktiviert werden.
+
++ Anpassungen in **_controller.h_**
+</br>Für die Kombination **Esprit-Board/Arduino-Carrier-Board** muss lediglich der Schalter **`_ESP32_ESPRIT_BOARD_`** entkommentiert werden und der Schalter **`_ESP32_CARRIER_BOARD_`** auskommentiert werden.
+</br>Als erweiterte Einstellungen kann hier der Trigger für die beiden externen Interrupts gesetzt werden. Ebenso wird die Serielle Schnittstelle für die rs232-Richtlinienfunktionen hier gewählt. Bei der Wahl der seriellen Bluetooth-Verbindung **`_SERIALBT_`** ist zu beachten, dass ein eindeutiger Gerätenamen **`_DEVICENAME_`** vergeben wird. Dies ist insbesondere bei bei vielen Teilnehmern im Klassenzimmer/Labor wichtig. Weiterhin kann auch die **_Baudrate_** für die Serielle Schnittstelle geändert werden, sowie die Ausgabe von Debug-Meldungen für PWM-, ADC- und Externer Interrupt aktiviert werden.
 ```c
 /*********************************
 // Board-Typ
@@ -196,9 +198,10 @@ Die Bibliotheksdateien sind normalerweise im Ordner ***libraries/FA205_ESP32*** 
 //#define INT_DEBUG
 //**********************************
 ```
-+ Anpassungen in ***in_out.cpp***
-Hier wird die Zuordnung der IO-Pins, der beiden ADC-Pins sowie des PWM-Pin zu den GPIO's des Controllers vorgenommen. Für das ESP32-Carrier-Board und das ESP32-Esprit-Board sind die Pins über die beschriebenen Schalter einstellbar. Für eigene Hardware bietet es sich an, die Pinzuordnungen im **default**-Abschnitt anzupassen. Zur Aktivierung der **default**-Einstellungen müssen dann beide Schalter (**_ESP32_CARRIER_BOARD_**, **_ESP32_ESPRIT_BOARD_**) auskommentiert werden. Die Einstellungen im Einzelnen sind:
-**portx[]**,**porty[]**: Im Array sind die Pins in aufsteigender Reihenfolge geordnet. Z.B.: ***PORTx,0 = GPIO9***; ***PORTy,5 = GPIO18***; usw.
++ Anpassungen in **_in_out.cpp_**
+</br>Hier wird die Zuordnung der IO-Pins, der beiden ADC-Pins sowie des PWM-Pin zu den GPIO's des Controllers vorgenommen. Für das ESP32-Carrier-Board und das ESP32-Esprit-Board sind die Pins über die beschriebenen Schalter einstellbar. Für eigene Hardware bietet es sich an, die Pinzuordnungen im **default**-Abschnitt anzupassen. Zur Aktivierung der **default**-Einstellungen müssen dann beide Schalter (**`_ESP32_CARRIER_BOARD_`**, **`_ESP32_ESPRIT_BOARD_`**) auskommentiert werden. Die Einstellungen im Einzelnen sind:
+++**portx[]**,**porty[]**: Im Array sind die Pins in aufsteigender Reihenfolge geordnet. Z.B.: **_PORTx,0 = GPIO9_**; **_PORTy,5 = GPIO18_**; usw.
+++**pwm_channel[]**: In diesem Array können bis zu **_14 GPIO's_** des ESP32 als PWM-Ausgänge eingetragen werden. Die Reihenfolge ist dabei beliebig und entspricht der verwendeten internen Kanalnummer (0...16) des ESP32. Es muss nur beachtet werden, dass der GPIO des Standard-**PWM_PIN** hier aufgelistet ist.
 ```c
 #else   //default
   const int portx[] = {9,10,14,4,33,15,13,32};		
@@ -209,3 +212,15 @@ Hier wird die Zuordnung der IO-Pins, der beiden ADC-Pins sowie des PWM-Pin zu de
   #define ADC2_PIN 38
 #endif
 ```
+In den Bibliotheken sind erweiterte **_pwmx_**-Funktionen implementiert, mit denen sehr einfach auch mehrere PWM-Ausgänge verwendet werden können.
+</br>Bsp.: **_3 RGB-Kanäle_**
+```c
+void setup (void)
+{
+  pwmx_init(10); pwmx_start(10);    pwmx_duty_cycle(10,100);             // Farbkanal rot  
+  pwmx_init(14); pwmx_start(14);    pwmx_duty_cycle(14,243);             // Farbkanal grün
+  pwmx_init(4);  pwmx_start(4);     pwmx_duty_cycle(4,59);               // Farbkanal blau
+}
+```
+
+ 
