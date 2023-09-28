@@ -156,7 +156,7 @@ void    rs232_print ( const char text[] );      // text[] = /0-terminierte Zeich
 Prinzipiell ist die FA205_ESP32-Bibliothek auf allen ESP32-Controllern lauffähig. Die Anpassung für die am Controller angeschlossene Hardware erfolgt über die Header(*.h)- und/oder *.cpp-Bibliotheksdateien. Diese befindet sich nach der Installation der Bibliothek normalerweise im Ordner **_libraries/FA205_ESP32_** des eingestellten Arduino-Sketchordners. Eine Anpassung an das häufig eingesetzte **Frematics/Esprit-Board** ist bereits implementiert und wird im folgenden als Vorlage für eigene Implementierungen beschrieben. Dabei kommt das in vielen Schulen bereits verwendete **Arduino-Carrier-Board** (https://www.ase-schlierbach.de) zum Einsatz, womit sich folgendes Pinout des **Esprit-Boards** ergibt:
 </br>
 <img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/15df384f-cf3e-455e-b0a4-cdff2d5bae4d" alt="Pinout ESP32-Esprit-Board" width="600">
-</br>Das **Esprit-Board** kann auf das **Arduino-Carrier-Board** im Huckepack Aufgesteckt werden.
+</br>Das **Esprit-Controllermodul** wird auf der Unterseite auf das **Arduino-Carrier-Board** aufgesteckt.
 </br><img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/1935d178-62f1-49a2-b245-853cc01187dc" alt="Arduino-Carrier-Board-Board" width="300">
 <img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/c8fffa9f-23a3-4eda-9372-2e5476f1e71d" alt="Esprit-Board Huckepack" width="300">
 + Anpassungen in **_controller.h_**
