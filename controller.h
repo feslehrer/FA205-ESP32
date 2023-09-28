@@ -36,7 +36,7 @@
 
 #ifdef _SERIALBT_
  // Hier eindeutigen Bluetooth-Geätenamen definieren
- #define _DEVICENAME_ "myESP32"    
+ #define _DEVICENAME_ "myESP32"         // Wichtig: Name in Gänsefüßchen (Anführungszeichen) setzen    
 #endif
 
 //**********************************

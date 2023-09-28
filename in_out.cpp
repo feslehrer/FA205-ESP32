@@ -24,7 +24,7 @@
   #define ADC1_PIN 39  // CH1: Poti/LDR/Exp.-Port
   #define ADC2_PIN 36  // CH2: Exp.-Port
 #else   //default: ESP32-Carrier-Board
-  const int portx[] = {9,10,14,4,33,15,13,32};		
+  const int portx[] = {9,10,14,4,33,15,13,32};
   const int porty[] = {2,27,5,23,19,18,36,39};
   const int pwm_channel[] = {2,27,5,23,19,18,9,10,14,4,33,15,13,32};
   #define PWM_PIN 2     // LCD-Backlight
