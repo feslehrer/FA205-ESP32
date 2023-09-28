@@ -228,7 +228,7 @@ void setup (void)
 }
 ```
 + Anpassungen in **_interrupt.h_**
-</br>Viele GPIO's des ESP32 können als externer Interrupt verwendet werden. Die Technische Richtlinie FA205 sieht jedoch nur einen Interrupt vor. Diese Bibliothek definiert trotzdem **2** verschiedene externe Interrupts, die mit (fast) beliebigen GPIO's verknüpft werden können. Die Einstellungen für **ESP32-Carrier-Board** und **Esprit-Board** sind durch die entsprechenden Schalter vorgegeben. Eigene Einstellungen sollte wieder über den **_default_**-Zweig und das deaktivieren der Schalter **`_ESP32_CARRIER_BOARD_`** und **`_ESP32_ESPRIT_BOARD_`** in **_controller.h_** vorgenommen werden.
+</br>Viele GPIO's des ESP32 können als externer Interrupt verwendet werden. Die Technische Richtlinie FA205 sieht jedoch nur einen Interrupt vor. Diese Bibliothek definiert trotzdem **2** verschiedene externe Interrupts, die mit (fast) beliebigen GPIO's verknüpft werden können. Die Einstellungen für **ESP32-Carrier-Board** und **Esprit-Board** sind durch die entsprechenden Schalter vorgegeben. Eigene Einstellungen sollte wieder über den **_default_**-Zweig und das Deaktivieren der Schalter **`_ESP32_CARRIER_BOARD_`** und **`_ESP32_ESPRIT_BOARD_`** in **_controller.h_** vorgenommen werden.
 ```c
 #if defined(_ESP32_CARRIER_BOARD_)
  #define _INTERRUPT_PIN0_ 14		// ESP32-Carrier-Board
@@ -241,4 +241,4 @@ void setup (void)
  #define _INTERRUPT_PIN1_  4
 #endif
 ```
-Zusätzlich zum Standard-Interrupt **`ext_interrupt`** ist der zusätzlicher Interrupt **`ext_interrupt1`** implementiert. Beide haben die gleiche Funktionalität und Aufrufmethodik.
+Zusätzlich zum Standard-Interrupt **`ext_interrupt`** ist ein zweiter Interrupt **`ext_interrupt1`** implementiert. Beide haben die gleiche Funktionalität und Aufrufmethodik.
