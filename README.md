@@ -217,7 +217,7 @@ uint16_t adc_in12(uint8_t pin_nr);    // 12-Bit ADC-Werte vom angegebenen GPIO (
   #define ADC2_PIN 38
 #endif
 ```
-In den Bibliotheken sind erweiterte **_pwmx_**-Funktionen implementiert, mit denen sehr einfach auch mehrere PWM-Ausgänge verwendet werden können.
+In den Bibliotheken sind erweiterte **_pwmx_**-Funktionen implementiert, mit denen sehr einfach auch mehrere PWM-Ausgänge verwendet werden können. Als Parameter muss dabei zusätzlich die Nummer des GPIO's übergeben werden.
 </br>Bsp.: **_3 RGB-Kanäle_**
 ```c
 void setup (void)
@@ -241,4 +241,4 @@ void setup (void)
  #define _INTERRUPT_PIN1_  4
 #endif
 ```
- 
+Zusätzlich zum Standard-Interrupt **`ext_interrupt`** ist der zusätzlicher Interrupt **`ext_interrupt1`** implementiert. Beide haben die gleiche Funktionalität und Aufrufmethodik.
