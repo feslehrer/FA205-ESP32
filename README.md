@@ -222,9 +222,9 @@ In den Bibliotheken sind erweiterte **_pwmx_**-Funktionen implementiert, mit den
 ```c
 void setup (void)
 {
-  pwmx_init(10); pwmx_start(10);    pwmx_duty_cycle(10,100);             // Farbkanal rot  
-  pwmx_init(14); pwmx_start(14);    pwmx_duty_cycle(14,243);             // Farbkanal grün
-  pwmx_init(4);  pwmx_start(4);     pwmx_duty_cycle(4,59);               // Farbkanal blau
+  pwmx_init(10); pwmx_start(10);    pwmx_duty_cycle(10,100);             // Farbkanal rot an GPIO 10
+  pwmx_init(14); pwmx_start(14);    pwmx_duty_cycle(14,243);             // Farbkanal grün an GPIO 14
+  pwmx_init(4);  pwmx_start(4);     pwmx_duty_cycle(4,59);               // Farbkanal blau an GPIO 4
 }
 ```
 + Anpassungen in **_interrupt.h_**
