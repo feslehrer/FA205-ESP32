@@ -41,7 +41,7 @@ rs232_print ( text );
 ```
 alternativ:
 ```c
-lcd_print ( "Hallo Welt");
+lcd_print ( "Hallo Welt" );
 ```
 + Die i2c-Routinen für die Kommunikation auf dem I2C-Bus sind in der Technischen Richtlinie so aufgebaut, dass der Elektroniker das Übertragungsprotokoll aus dem Datenblatt eines IC direkt nachbilden kann. Da die Arduino-Wire-Bibliothek eine solche Vorgehensweise nicht zulässt, wurden die i2c-Funktionen mit der **Espressif-IDF** realisiert. Die Wire-Bibliothek darf daher nicht verwendet werden. Ebenso wird für das I2C-LCD keine weitere Bibliothek benötigt.
 Zu beachten ist, dass ein sogenannter **Repeated-Start** ohne **i2c_stop()** nur mit der - nicht richtlinienkonformen - Funktion **i2c_rstart()** funktioniert. Da die Espressif-IDF mit einer Befehlsqueue arbeitet, wird ein mit i2c_start() eingeleiteter Übertragungsrahmen erst mit einem i2c_stop() oder bei i2c_rstart() physikalisch auf dem Bus erscheinen. Problematisch wird dies beim Lesen vom Slave. Hier übergibt die Funktion **i2c_read()** nicht die gelesenen Daten (weil der Befehl erst in die Befehlsqueue geschrieben wird), sondern nur einen Index auf das Array **i2c_data[]**. Das Beispiel unten soll die Vorgehensweise verdeutlichen:
@@ -151,3 +151,61 @@ void    rs232_put   ( uint8_t value );          // value = ASCII-Code (8(7)-Bit)
 void    rs232_print ( const char text[] );      // text[] = /0-terminierte Zeichenkatte
 ```
 **Anmerkung:** In den Bibliotheken sind einige ergänzende Funktionen enthalten. Informationen dazu finden sich im jeweiligen Header-Files.
+
+## Anpassen der Bibliotheken an weitere ESP32-Hardware
+Prinzipiell ist die FA205_ESP32-Bibliothek auf allen ESP32-Controllern Lauffähig. Die Anpassung an die am Controller angeschlossene Hardware muß über die Header(*.h)- und/oder *.cpp-Bibliotheksdateien erfolgen. Eine Anpassung an das Frematics/Esprit-Board ist bereits implementiert und wird im folgenden als Vorlage für eigene Implementierungen beschrieben. Dabei kommt das in vielen Schulen bereits verwendete Arduino-Carrier-Board (https://www.ase-schlierbach.de) zum Einsatz. Folgendes Pinout des Esprit-Boards wird dabei implementiert:
+<img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/15df384f-cf3e-455e-b0a4-cdff2d5bae4d" alt="Pinout ESP32-Esprit-Board" width="600">
+Die Bibliotheksdateien sind normalerweise im Ordner ***libraries/FA205_ESP32*** im Arduino-Sketch-Sketchordner zu finden.
++ Anpassungen in ***controller.h***
+</br>Für das ESP32-Esprit-Board in Komination mit dem Arduino-Carrier-Board muss lediglich der Schalter **_ESP32_ESPRIT_BOARD_** entkommentiert werden und der Schalter **_ESP32_CARRIER_BOARD_** auskommentiert werden. Als weitere Einstellungen können hier (jeweils durch Auskommentierung) der Trigger für die beiden externen Interrupts gewählt werden. Ebenso wird eine Serielle Schnittstelle für die rs232-Richtlinienfunktionen gewählt. Bei der Wahl der seriellen Bluetooth-Verbindung **_SERIALBT_** muss ein eindeutiger Gerätenamen (**_DEVICENAME_**) verwendet werden, was insbesondere bei der Verwendung mit vielen Nutzern im Klassenzimmer/Labor wichtig ist. Ebenso kann hier auch die ***Baudrate*** für die Serielle Schnittstelle geändert werden. An dieser Stelle kann auch die Ausgabe von Debug-Meldungen für PWM-, ADC- und Externer Interrupt aktiviert werden.
+```c
+/*********************************
+// Board-Typ
+//---------------------------------
+#define _ESP32_CARRIER_BOARD_
+//#define _ESP32_ESPRIT_BOARD_
+
+//*********************************
+// externer Interrupt Trigger
+//---------------------------------
+#define _FALLING_EDGE_TRIGGER_
+//#define _RISING_EDGE_TRIGGER_
+//#define _ANY_EDGE_TRIGGER_
+
+//**********************************
+// RS232/Serial
+//----------------------------------
+#define BAUD  9600 //9600 //19200 //115200          //Baudraten können beliebig eingestellt werden.
+#define _SERIAL0_  // Alternativ
+//#define _SERIAL1_
+//#define _SERIALBT_
+
+#ifdef _SERIALBT_
+ // Hier eindeutigen Bluetooth-Geätenamen definieren
+ #define _DEVICENAME_ "myESP32"         // Wichtig: Name in Gänsefüßchen (Anführungszeichen) setzen
+#endif
+
+//**********************************
+//Ausgabe von Debugmeldungen über RS232 
+// Entsprechenden Debug-Schalter auskommentieren
+// Hinweis: zum Debuggen muss jeweils die zugehörige init-Funktion
+//          im Programm (Sketch) aufgerufen werden. 
+//----------------------------------
+//#define PWM_DEBUG
+//#define ADC_DEBUG
+//#define INT_DEBUG
+//**********************************
+```
++ Anpassungen in ***in_out.cpp***
+Hier wird die Zuordnung der IO-Pins, der beiden ADC-Pins sowie des PWM-Pin zu den GPIO's des Controllers vorgenommen. Für das ESP32-Carrier-Board und das ESP32-Esprit-Board sind die Pins über die beschriebenen Schalter einstellbar. Für eigene Hardware bietet es sich an, die Pinzuordnungen im **default**-Abschnitt anzupassen. Zur Aktivierung der **default**-Einstellungen müssen dann beide Schalter (**_ESP32_CARRIER_BOARD_**, **_ESP32_ESPRIT_BOARD_**) auskommentiert werden. Die Einstellungen im Einzelnen sind:
+**portx[]**,**porty[]**: Im Array sind die Pins in aufsteigender Reihenfolge geordnet. Z.B.: ***PORTx,0 = GPIO9***; ***PORTy,5 = GPIO18***; usw.
+```c
+#else   //default
+  const int portx[] = {9,10,14,4,33,15,13,32};		
+  const int porty[] = {2,27,5,23,19,18,36,39};
+  const int pwm_channel[] = {2,27,5,23,19,18,9,10,14,4,33,15,13,32};
+  #define PWM_PIN   2
+  #define ADC1_PIN 34
+  #define ADC2_PIN 38
+#endif
+```
