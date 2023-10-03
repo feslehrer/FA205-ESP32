@@ -6,6 +6,12 @@ Die Richtlinie enthält:
 + Blockschaltbild des (Modell-)Mikrocontrollers
 + C-Funktionsbibliotheken (delay, in_out, interrupt, lcd, communication)
 
+###Weitere FA205-Impementierungen sind
+Implementierungen sind für folgende Plattformen verfügbar: 
++ ATmega328PXplainedmini mit Microchip-Studio: https://github.com/feslehrer/FA205.git
++ ArduinoUno/Nano mit ATmega328P und ArduinoIDE 
+
+
 ## Installation
 + Auf GitHub Resource: https://github.com/feslehrer/FA205-ESP32.git
 <br>Download der Bibliothek als Zip-Datei (<>Code --> Download Zip)
