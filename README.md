@@ -6,7 +6,7 @@ Die Richtlinie enthält:
 + Blockschaltbild des (Modell-)Mikrocontrollers
 + C-Funktionsbibliotheken (delay, in_out, interrupt, lcd, communication)
 
-##Sonstige FA205-Impementierungen
+### Sonstige FA205-Impementierungen
 Implementierungen sind für folgende Plattformen verfügbar: 
 + ATmega328PXplainedmini mit Microchip-Studio: https://github.com/feslehrer/FA205.git
 + ArduinoUno/Nano mit ATmega328P und ArduinoIDE: https://github.com/feslehrer/FA205_Library_for_Arduino.git
