@@ -8,7 +8,7 @@ Die Richtlinie enthält:
 
 ### Sonstige FA205-Implementierungen
 Implementierungen sind für folgende Plattformen verfügbar: 
-+ ATmega328PXplainedmini mit Microchip-Studio: https://github.com/feslehrer/FA205.git
++ ATmega328P-Xplained Mini mit Microchip-Studio: https://github.com/feslehrer/FA205.git
 + ArduinoUno/Nano mit ATmega328P und ArduinoIDE: https://github.com/feslehrer/FA205_Library_for_Arduino.git
 
 ## Installation
