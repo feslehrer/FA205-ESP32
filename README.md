@@ -164,6 +164,7 @@ Prinzipiell ist die FA205_ESP32-Bibliothek auf allen ESP32-Controllern lauffähi
 </br>Das **Esprit-Controllermodul** wird auf der Unterseite auf das **Arduino-Carrier-Board** aufgesteckt.
 </br><img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/1935d178-62f1-49a2-b245-853cc01187dc" alt="Arduino-Carrier-Board-Board" width="300">
 <img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/c8fffa9f-23a3-4eda-9372-2e5476f1e71d" alt="Esprit-Board Huckepack" width="300">
+</br><a href="https://ase-schlierbach.de/produkt/arduino-carrier-board_fertigprodukt/" target="_blank">www.ase-schlierbach.de</a>
 + Anpassungen in **_controller.h_**
 </br>Für die Kombination **Esprit-Board/Arduino-Carrier-Board** muss lediglich der Schalter **`_ESP32_ESPRIT_BOARD_`** entkommentiert werden und der Schalter **`_ESP32_CARRIER_BOARD_`** auskommentiert werden. Sind beide Schalter auskommentiert, gelten die **_Default-Einstellungen_**.
 </br>Als erweiterte Einstellungen kann hier der Trigger für die beiden externen Interrupts gesetzt werden. Ebenso wird die Serielle Schnittstelle für die rs232-Richtlinienfunktionen hier gewählt. Bei der Wahl der seriellen Bluetooth-Verbindung **`_SERIALBT_`** ist zu beachten, dass ein eindeutiger Gerätenamen **`_DEVICENAME_`** vergeben wird. Dies ist insbesondere bei bei vielen Teilnehmern im Klassenzimmer/Labor wichtig. Weiterhin kann auch die **_Baudrate_** für die Serielle Schnittstelle geändert werden, sowie die Ausgabe von Debug-Meldungen für PWM-, ADC- und Externer Interrupt aktiviert werden.
