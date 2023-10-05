@@ -22,7 +22,7 @@ void setup()
 
 void loop()
 {	/* Analogwert an A1 holen und als PWM-Tastgrad ausgeben */
-   int8_t send_buffer[10];
+   char send_buffer[10];
 
    uint8_t anWert = adc_in1();  //Tastgrad Analogwert holen
    sprintf(send_buffer,"%d\n\r",anWert);       
