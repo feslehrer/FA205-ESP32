@@ -71,7 +71,7 @@ Das dekodierte Signal auf dem I2C-Bus stimmt mit dem Übertragungsprotokoll im D
 
 ## ESP32-Carrier-Board von AS-Elektronik
 <img src="https://user-images.githubusercontent.com/24614659/235747329-3b294437-124a-4d40-9fe2-bfb1395ae811.jpg" alt="ESP32-Carrier-Board" width="600">
-https://www.ase-schlierbach.de
+<a href="https://ase-schlierbach.de/produkt/esp32-carrier-board-v1-5/" target="_blank">ESP32-Carrier-Board</a>
 
 ### FA205-Portbelegungen für ESP32-Carrier-Board
 Das ESP32-Carrier-Board ist mit den GPIO-Nummern bedruckt.
