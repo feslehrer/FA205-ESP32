@@ -76,7 +76,7 @@ Das dekodierte Signal auf dem I2C-Bus stimmt mit dem Übertragungsprotokoll im D
 ### FA205-Portbelegungen für ESP32-Carrier-Board
 Das ESP32-Carrier-Board ist mit den GPIO-Nummern bedruckt.
 Für die Technische Richtlinie müssen daher die GPIO-Nummern entsprechend dem abgebildeten Schema ersetzt werden:
-<img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/eaa6cf4a-80f9-4a24-b3ef-3d3ee630ba00" alt="FA205 Pinbelegung" width="800">
+<img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/8bb2f964-ed43-4904-bf8d-113db8d25177" alt="FA205 Pinbelegung" width="800">
 
 ### FA205-Prototypen:
 + **delay.h**
