@@ -208,9 +208,9 @@ Prinzipiell ist die FA205_ESP32-Bibliothek auf allen ESP32-Controllern lauffähi
 ```
 + Anpassungen in **_in_out.cpp_**
 <br>Hier wird die Zuordnung der IO-Pins, der beiden ADC-Pins sowie des PWM-Pin zu den GPIO's des Controllers vorgenommen. Für das ESP32-Carrier-Board und das ESP32-Esprit-Board sind die Pins über die beschriebenen Schalter einstellbar. Für eigene Hardware bietet es sich an, die Pinzuordnungen im **default**-Abschnitt anzupassen. Zur Aktivierung der **default**-Einstellungen müssen dann beide Schalter (**`_ESP32_CARRIER_BOARD_`**, **`_ESP32_ESPRIT_BOARD_`**) auskommentiert werden. Die Einstellungen im Einzelnen sind:
-<br>++ **portx[]**,**porty[]**: Im Array sind die Pins in aufsteigender Reihenfolge geordnet. Z.B.: **_PORTx,0 = GPIO9_**; **_PORTy,5 = GPIO18_**; usw.
-<br>++ **pwm_channel[]**: In diesem Array können bis zu **_14 GPIO's_** des ESP32 als PWM-Ausgänge eingetragen werden. Die Reihenfolge ist dabei beliebig und entspricht der verwendeten internen Kanalnummer (0...16) des ESP32. Es muss nur beachtet werden, dass der GPIO des Standard-**`PWM_PIN`** hier aufgelistet ist.
-<br>++ **`ADC1_PIN`** und **`ADC2_PIN`** sind die ADC-Eingänge für die beiden Standard-Funktionen **adc_in1()`** und **adc_in2()**. Für weitere ADC-Kanäle gibt es die Funktionen:
+++ **portx[]**,**porty[]**: Im Array sind die Pins in aufsteigender Reihenfolge geordnet. Z.B.: **_PORTx,0 = GPIO9_**; **_PORTy,5 = GPIO18_**; usw.
+++ **pwm_channel[]**: In diesem Array können bis zu **_14 GPIO's_** des ESP32 als PWM-Ausgänge eingetragen werden. Die Reihenfolge ist dabei beliebig und entspricht der verwendeten internen Kanalnummer (0...16) des ESP32. Es muss nur beachtet werden, dass der GPIO des Standard-**`PWM_PIN`** hier aufgelistet ist.
+++ **`ADC1_PIN`** und **`ADC2_PIN`** sind die ADC-Eingänge für die beiden Standard-Funktionen **adc_in1()`** und **adc_in2()**. Für weitere ADC-Kanäle gibt es die Funktionen:
 ```c
 uint8_t adc_in(uint8_t pin_nr);       // 8-Bit ADC-Wert vom angegebenen GPIO
 uint16_t adc_in12(uint8_t pin_nr);    // 12-Bit ADC-Werte vom angegebenen GPIO (Vorsicht: Die internen ADC des ESP32 sind sehr ungenau!!)
