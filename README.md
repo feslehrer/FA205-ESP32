@@ -159,15 +159,15 @@ void    rs232_print ( const char text[] );      // text[] = /0-terminierte Zeich
 
 ## Anpassen der Bibliotheken an weitere ESP32-Hardware
 Prinzipiell ist die FA205_ESP32-Bibliothek auf allen ESP32-Controllern lauffähig. Die Anpassung für die am Controller angeschlossene Hardware erfolgt über die Header(*.h)- und/oder *.cpp-Bibliotheksdateien. Diese befindet sich nach der Installation der Bibliothek normalerweise im Ordner **_libraries/FA205_ESP32_** des eingestellten Arduino-Sketchordners. Eine Anpassung an das häufig eingesetzte **Frematics/Esprit-Board** ist bereits implementiert und wird im folgenden als Vorlage für eigene Implementierungen beschrieben. Dabei kommt das in vielen Schulen bereits verwendete **Arduino-Carrier-Board** (https://www.ase-schlierbach.de) zum Einsatz, womit sich folgendes Pinout des **Esprit-Boards** ergibt:
-</br>
+<br>
 <img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/15df384f-cf3e-455e-b0a4-cdff2d5bae4d" alt="Pinout ESP32-Esprit-Board" width="600">
-</br>Das **Esprit-Controllermodul** wird auf der Unterseite auf das **Arduino-Carrier-Board** aufgesteckt.
-</br><img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/1935d178-62f1-49a2-b245-853cc01187dc" alt="Arduino-Carrier-Board-Board" width="300">
+<br>Das **Esprit-Controllermodul** wird auf der Unterseite auf das **Arduino-Carrier-Board** aufgesteckt.
+<br><img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/1935d178-62f1-49a2-b245-853cc01187dc" alt="Arduino-Carrier-Board-Board" width="300">
 <img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/c8fffa9f-23a3-4eda-9372-2e5476f1e71d" alt="Esprit-Board Huckepack" width="300">
-</br><a href="https://ase-schlierbach.de/produkt/arduino-carrier-board_fertigprodukt/" target="_blank">www.ase-schlierbach.de</a>
+<br><a href="https://ase-schlierbach.de/produkt/arduino-carrier-board_fertigprodukt/" target="_blank">www.ase-schlierbach.de</a>
 + Anpassungen in **_controller.h_**
-</br>Für die Kombination **Esprit-Board/Arduino-Carrier-Board** muss lediglich der Schalter **`_ESP32_ESPRIT_BOARD_`** entkommentiert werden und der Schalter **`_ESP32_CARRIER_BOARD_`** auskommentiert werden. Sind beide Schalter auskommentiert, gelten die **_Default-Einstellungen_**.
-</br>Als erweiterte Einstellungen kann hier der Trigger für die beiden externen Interrupts gesetzt werden. Ebenso wird die Serielle Schnittstelle für die rs232-Richtlinienfunktionen hier gewählt. Bei der Wahl der seriellen Bluetooth-Verbindung **`_SERIALBT_`** ist zu beachten, dass ein eindeutiger Gerätenamen **`_DEVICENAME_`** vergeben wird. Dies ist insbesondere bei bei vielen Teilnehmern im Klassenzimmer/Labor wichtig. Weiterhin kann auch die **_Baudrate_** für die Serielle Schnittstelle geändert werden, sowie die Ausgabe von Debug-Meldungen für PWM-, ADC- und Externer Interrupt aktiviert werden.
+<br>Für die Kombination **Esprit-Board/Arduino-Carrier-Board** muss lediglich der Schalter **`_ESP32_ESPRIT_BOARD_`** entkommentiert werden und der Schalter **`_ESP32_CARRIER_BOARD_`** auskommentiert werden. Sind beide Schalter auskommentiert, gelten die **_Default-Einstellungen_**.
+<br>Als erweiterte Einstellungen kann hier der Trigger für die beiden externen Interrupts gesetzt werden. Ebenso wird die Serielle Schnittstelle für die rs232-Richtlinienfunktionen hier gewählt. Bei der Wahl der seriellen Bluetooth-Verbindung **`_SERIALBT_`** ist zu beachten, dass ein eindeutiger Gerätenamen **`_DEVICENAME_`** vergeben wird. Dies ist insbesondere bei bei vielen Teilnehmern im Klassenzimmer/Labor wichtig. Weiterhin kann auch die **_Baudrate_** für die Serielle Schnittstelle geändert werden, sowie die Ausgabe von Debug-Meldungen für PWM-, ADC- und Externer Interrupt aktiviert werden.
 ```c
 /*********************************
 // Board-Typ
@@ -207,10 +207,10 @@ Prinzipiell ist die FA205_ESP32-Bibliothek auf allen ESP32-Controllern lauffähi
 //**********************************
 ```
 + Anpassungen in **_in_out.cpp_**
-<br/>Hier wird die Zuordnung der IO-Pins, der beiden ADC-Pins sowie des PWM-Pin zu den GPIO's des Controllers vorgenommen. Für das ESP32-Carrier-Board und das ESP32-Esprit-Board sind die Pins über die beschriebenen Schalter einstellbar. Für eigene Hardware bietet es sich an, die Pinzuordnungen im **default**-Abschnitt anzupassen. Zur Aktivierung der **default**-Einstellungen müssen dann beide Schalter (**`_ESP32_CARRIER_BOARD_`**, **`_ESP32_ESPRIT_BOARD_`**) auskommentiert werden. Die Einstellungen im Einzelnen sind:
-<br/>++ **portx[]**,**porty[]**: Im Array sind die Pins in aufsteigender Reihenfolge geordnet. Z.B.: **_PORTx,0 = GPIO9_**; **_PORTy,5 = GPIO18_**; usw.
-<br/>++ **pwm_channel[]**: In diesem Array können bis zu **_14 GPIO's_** des ESP32 als PWM-Ausgänge eingetragen werden. Die Reihenfolge ist dabei beliebig und entspricht der verwendeten internen Kanalnummer (0...16) des ESP32. Es muss nur beachtet werden, dass der GPIO des Standard-**`PWM_PIN`** hier aufgelistet ist.
-<br/>++ **`ADC1_PIN`** und **`ADC2_PIN`** sind die ADC-Eingänge für die beiden Standard-Funktionen **adc_in1()`** und **adc_in2()**. Für weitere ADC-Kanäle gibt es die Funktionen:
+<br>Hier wird die Zuordnung der IO-Pins, der beiden ADC-Pins sowie des PWM-Pin zu den GPIO's des Controllers vorgenommen. Für das ESP32-Carrier-Board und das ESP32-Esprit-Board sind die Pins über die beschriebenen Schalter einstellbar. Für eigene Hardware bietet es sich an, die Pinzuordnungen im **default**-Abschnitt anzupassen. Zur Aktivierung der **default**-Einstellungen müssen dann beide Schalter (**`_ESP32_CARRIER_BOARD_`**, **`_ESP32_ESPRIT_BOARD_`**) auskommentiert werden. Die Einstellungen im Einzelnen sind:
+<br>++ **portx[]**,**porty[]**: Im Array sind die Pins in aufsteigender Reihenfolge geordnet. Z.B.: **_PORTx,0 = GPIO9_**; **_PORTy,5 = GPIO18_**; usw.
+<br>++ **pwm_channel[]**: In diesem Array können bis zu **_14 GPIO's_** des ESP32 als PWM-Ausgänge eingetragen werden. Die Reihenfolge ist dabei beliebig und entspricht der verwendeten internen Kanalnummer (0...16) des ESP32. Es muss nur beachtet werden, dass der GPIO des Standard-**`PWM_PIN`** hier aufgelistet ist.
+<br>++ **`ADC1_PIN`** und **`ADC2_PIN`** sind die ADC-Eingänge für die beiden Standard-Funktionen **adc_in1()`** und **adc_in2()**. Für weitere ADC-Kanäle gibt es die Funktionen:
 ```c
 uint8_t adc_in(uint8_t pin_nr);       // 8-Bit ADC-Wert vom angegebenen GPIO
 uint16_t adc_in12(uint8_t pin_nr);    // 12-Bit ADC-Werte vom angegebenen GPIO (Vorsicht: Die internen ADC des ESP32 sind sehr ungenau!!)
@@ -226,7 +226,7 @@ uint16_t adc_in12(uint8_t pin_nr);    // 12-Bit ADC-Werte vom angegebenen GPIO (
 #endif
 ```
 In den Bibliotheken sind erweiterte **_pwmx_**-Funktionen implementiert, mit denen sehr einfach auch mehrere PWM-Ausgänge verwendet werden können. Als Parameter muss dabei zusätzlich die Nummer des GPIO's übergeben werden.
-<br/>Bsp.: **_3 RGB-Kanäle_**
+<br>Bsp.: **_3 RGB-Kanäle_**
 ```c
 void setup (void)
 {
@@ -236,7 +236,7 @@ void setup (void)
 }
 ```
 + Anpassungen in **_interrupt.h_**
-<br/>Viele GPIO's des ESP32 können als externer Interrupt verwendet werden. Die Technische Richtlinie FA205 sieht jedoch nur einen Interrupt vor. Diese Bibliothek definiert trotzdem **2** verschiedene externe Interrupts, die mit (fast) beliebigen GPIO's verknüpft werden können. Die Einstellungen für **ESP32-Carrier-Board** und **Esprit-Board** sind durch die entsprechenden Schalter vorgegeben. Eigene Einstellungen sollte wieder über den **_default_**-Zweig und das Deaktivieren der Schalter **`_ESP32_CARRIER_BOARD_`** und **`_ESP32_ESPRIT_BOARD_`** in **_controller.h_** vorgenommen werden.
+<br>Viele GPIO's des ESP32 können als externer Interrupt verwendet werden. Die Technische Richtlinie FA205 sieht jedoch nur einen Interrupt vor. Diese Bibliothek definiert trotzdem **2** verschiedene externe Interrupts, die mit (fast) beliebigen GPIO's verknüpft werden können. Die Einstellungen für **ESP32-Carrier-Board** und **Esprit-Board** sind durch die entsprechenden Schalter vorgegeben. Eigene Einstellungen sollte wieder über den **_default_**-Zweig und das Deaktivieren der Schalter **`_ESP32_CARRIER_BOARD_`** und **`_ESP32_ESPRIT_BOARD_`** in **_controller.h_** vorgenommen werden.
 ```c
 #if defined(_ESP32_CARRIER_BOARD_)
  #define _INTERRUPT_PIN0_ 14		// ESP32-Carrier-Board
