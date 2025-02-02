@@ -185,10 +185,15 @@ void timer_ms_init ( void (*ti) (void), float time)
   timerAlarm(timer,alarm,true,0);
 
   #ifdef TIMER_DEBUG
+    char buf[10];
 	  rs232_init();
-	  rs232_print("\n\rTimer init onTime: ");rs232_byte(time);
-	  rs232_print("\n\r        Frequency: ");rs232_int(timerGetFrequency(timer));
-	  rs232_print("\n\r       Resolution: ");rs232_int(alarm);
+    delay(20);
+    sprintf(buf,"%u ms", (int)time);
+	  rs232_print("\n\rTimer init onTime: "); rs232_print(buf);
+    sprintf(buf,"%u",timerGetFrequency(timer));
+	  rs232_print("\n\r        Frequency: "); rs232_print(buf);
+    sprintf(buf,"%u",alarm);
+	  rs232_print("\n\r            Alarm: "); rs232_print(buf);
 	#endif
   timerStop(timer);
 }

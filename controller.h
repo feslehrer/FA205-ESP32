@@ -45,7 +45,7 @@
 // Hinweis: zum Debuggen muss jeweils die zugehörige init-Funktion
 //          im Programm (Sketch) aufgerufen werden. 
 //----------------------------------
-//#define PWM_DEBUG
+#define PWM_DEBUG
 //#define ADC_DEBUG
 //#define INT_DEBUG
 //#define TIMER_DEBUG

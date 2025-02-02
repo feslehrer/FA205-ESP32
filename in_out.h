@@ -45,7 +45,7 @@ void    pwm_duty_cycle ( uint8_t value);
 void    pwmx_init  ( uint8_t pin_nr );
 void    pwmx_start ( uint8_t pin_nr );
 void    pwmx_stop  ( uint8_t pin_nr );
-void    pwmx_duty_cycle ( uint8_t pin_nr, uint8_t value);
+void    pwmx_duty_cycle ( uint8_t pin_nr, uint16_t value);
 
 // Funktionsprototypen für AD-Wandler
 void    adc_init   ( void );    // 8-Bit

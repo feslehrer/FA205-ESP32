@@ -13,7 +13,7 @@ const int PWM_FREQU = 1'000;
 const int PWM_RESOLUTION = 8;
 const int MAX_DUTY_CYCLE = (int)(pow(2, PWM_RESOLUTION) - 1);
 
-int duty_cycle = 0;
+uint16_t duty_cycle = MAX_DUTY_CYCLE/2;
 
 #if defined(_ESP32_CARRIER_BOARD_)   //ESP32-Carrier-Board
   const int portx[] = {9,10,14,4,33,15,13,32};
@@ -37,8 +37,6 @@ int duty_cycle = 0;
   #define ADC1_PIN 34   // CH1: Poti/LDR/Exp.-Port
   #define ADC2_PIN 38   // CH2: Exp.-Port
 #endif
-
-
 
 // Definition der Funktionen
 //***************************************************************
@@ -142,85 +140,50 @@ void pwmx_init( uint8_t bit_nr )
 {
   // ab ESP-Arduino-EDF 3.0.x
   // erfolg die Kanalauswahl automatisch durch die IDF.
-  // Initialisierung wird nicht mehr benötigt.
-   
-  /* // ESP-Arduino-IDF 2.0.x
-  for(uint8_t i=0;i<14;i++)
-  {
-    if (pwm_channel[i]==bit_nr)
-    {
-      ledcSetup(i,1000,8);
-      ledcWrite(i,127);
-
-
-	  #ifdef PWM_DEBUG
-	   rs232_init();
-	   rs232_print("\n\rPWM init on GPIO: ");rs232_byte(bit_nr);
-	   rs232_print("\n\r      on Channel: ");rs232_byte(i);	  
-	  #endif
-      return;
-    }
-  }
-  */
-}
-
-void pwmx_start( uint8_t bit_nr )
-{
-  // ab ESP-Arduino-EDF 3.0.x
   ledcAttach(bit_nr, PWM_FREQU, PWM_RESOLUTION);
-  ledcWrite(bit_nr,127);
+  ledcWrite(bit_nr,0);              // PWM stoppen (dutycycle = 0)
 
   #ifdef PWM_DEBUG
 	  rs232_init();
 	  rs232_print("\n\rPWM init on GPIO: ");rs232_byte(bit_nr);
 	  rs232_print("\n\r       Frequency: ");rs232_int(PWM_FREQU);
-	  rs232_print("\n\r      Resolution: ");rs232_int(PWM_RESOLUTION);    
-	  rs232_print("\n\r      Duty-Cycle: ");rs232_byte(127);       
+    rs232_print("\n\r      Resolution: ");rs232_int(PWM_RESOLUTION);
+    rs232_print("\n\r            Mode: ");rs232_print("Stopped");
 	#endif
-  
-  /* // ESP-Arduino-IDF 2.0.x
-  for(uint8_t i=0;i<14;i++)
-  {
-    if (pwm_channel[i]==bit_nr)
-    {
-      ledcAttachPin(bit_nr,i);
-	  #ifdef PWM_DEBUG
-	   rs232_print("\n\rPWM start on GPIO: ");rs232_int(bit_nr);
-	  #endif
-      return;
-    }
-  }
-  */
+}
+
+void pwmx_start( uint8_t bit_nr )
+{
+  // ab ESP-Arduino-EDF 3.0.x
+  ledcWrite(bit_nr,duty_cycle);
+
+  #ifdef PWM_DEBUG
+	  rs232_print("\n\rPWM      on GPIO: ");rs232_byte(bit_nr);
+	  rs232_print("\n\r       dutycycle: ");rs232_int(duty_cycle);
+    rs232_print("\n\r            Mode: ");rs232_print("Run");   
+	#endif
 }
 
 void pwmx_stop( uint8_t bit_nr )
 {
-    ledcDetach(bit_nr);
-	  
-    #ifdef PWM_DEBUG
-	   rs232_print("\n\rPWM stop on GPIO: ");rs232_byte(bit_nr);
-	  #endif
-    
-    return;
+  // ab ESP-Arduino-EDF 3.0.x
+  ledcWrite(bit_nr,0);
+	
+  #ifdef PWM_DEBUG
+	  rs232_print("\n\rPWM      on GPIO: ");rs232_byte(bit_nr);
+    rs232_print("\n\r            Mode: ");rs232_print("Stopped");
+	#endif
 }
-void pwmx_duty_cycle ( uint8_t bit_nr, uint8_t value )
+void pwmx_duty_cycle ( uint8_t bit_nr, uint16_t value )
 {
   // ab ESP-Arduino-EDF 3.0.x
-  ledcWrite(bit_nr,value);
+  duty_cycle = value;
+  ledcWrite(bit_nr,duty_cycle);
 
-   /* // ESP-Arduino-IDF 2.0.x
-  for(uint8_t i=0;i<14;i++)
-  {
-    if (pwm_channel[i]==bit_nr)
-    {
-      ledcWrite(i,value);
-	  #ifdef PWM_DEBUG
-	    rs232_print("\n\rPWM dutycycle: ");rs232_int(value);
-	  #endif
-      return;
-    }
-  }
-  */
+	#ifdef PWM_DEBUG
+  	rs232_print("\n\rPWM      on GPIO: ");rs232_byte(bit_nr);
+	  rs232_print("\n\rPWM    dutycycle: ");rs232_int(duty_cycle);
+	#endif
 }
 
 void pwm_init(void)
@@ -238,9 +201,9 @@ void pwm_stop()
   pwmx_stop(PWM_PIN);
 }
 
-void pwm_duty_cycle ( uint8_t value )
+void pwm_duty_cycle( uint8_t value )
 {
-  pwmx_duty_cycle(PWM_PIN,value);
+  pwmx_duty_cycle(PWM_PIN,(uint16_t) value);
 }
 
 //***************************************************************
