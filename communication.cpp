@@ -25,7 +25,8 @@
 
 #define I2C_MASTER_SCL_IO           22          /*!< gpio number for I2C master clock */
 #define I2C_MASTER_SDA_IO           21          /*!< gpio number for I2C master data  */
-#define I2C_MASTER_NUM              I2C_NUM_0   /*!< I2C port number for master dev */
+//#define I2C_MASTER_NUM              I2C_NUM_0   /*!< I2C port number for master dev */
+const i2c_port_t I2C_MASTER_NUM = I2C_NUM_0;   /*!< I2C port number for master dev */
 #define I2C_MASTER_TX_BUF_DISABLE   0           /*!< I2C master do not need buffer */
 #define I2C_MASTER_RX_BUF_DISABLE   0           /*!< I2C master do not need buffer */
 #define ACK_CHECK_EN                0x1         /*!< I2C master will check ack from slave*/
@@ -43,7 +44,7 @@ volatile uint8_t i2c_dp = 0;  // Index auf i2c_data[]
 
 void i2c_init (void)
 {
-  int i2c_master_port = I2C_MASTER_NUM;
+  i2c_port_t i2c_master_port = I2C_MASTER_NUM;
 
   i2c_config_t conf = {
       conf.mode = I2C_MODE_MASTER,
@@ -133,17 +134,17 @@ void rs232_baud ( uint32_t baud )     // Ändert die Baudrate
 {
   #if defined(_SERIAL0_)
     Serial.end();
-	delay_ms(20);
+	  delay_ms(20);
     Serial.begin(baud);
 	while (!Serial);
   #elif defined(_SERIAL1_)
     Serial1.end();
-	delay_ms(20);
+	  delay_ms(20);
     Serial1.begin(baud);
 	while (!Serial1);
   #elif defined(_SERIALBT_)
     SerialBT.end();
-	delay_ms(20);
+	  delay_ms(20);
     SerialBT.begin(_DEVICENAME_);
 	while (!SerialBT);
   #endif

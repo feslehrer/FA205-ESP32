@@ -48,6 +48,7 @@
 //#define PWM_DEBUG
 //#define ADC_DEBUG
 //#define INT_DEBUG
+//#define TIMER_DEBUG
 //**********************************
 
 #ifdef F_CPU

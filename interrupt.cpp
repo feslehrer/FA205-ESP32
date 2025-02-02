@@ -4,7 +4,7 @@
 //     
 // Version:          1.0
 // erstellt am:      4.9.2023
-// letzte Änderung:  27.9.2023
+// letzte Änderung:  02.02.2025
 // Autor:            Rahm
 
 #include "interrupt.h"
@@ -14,8 +14,11 @@
 static uint8_t trigger;
 
 static hw_timer_t *timer = NULL;
-const int timerNr = 0;
-#define _DIVIDER_ 80
+//const int timerNr = 0;    // ESP-Arduino-IDF 2.0.x
+//#define _DIVIDER_ 80
+//const unsigned long Alarm = 1'000'000;      // ab ESP-Arduino-IDF 3.0.x
+const unsigned long frequency = 1'000'000;
+
 void note_isr( void );
 
 // Pointer auf Interrupt-Service-Routinen
@@ -160,7 +163,8 @@ void timer1ms_disable( void )
 // selbst geschrieben werden!!
 uint64_t calculate_alarm ( float time)
 { // time in ms
-  return ((uint64_t)((float)(F_CPU/_DIVIDER_/1000) * time));
+  //return ((uint64_t)((float)(F_CPU/_DIVIDER_/1000) * time));
+  return ((uint64_t)(time * (frequency / 1000.0)));
 }
 
 void IRAM_ATTR timer0_isr(void)
@@ -171,21 +175,40 @@ void IRAM_ATTR timer0_isr(void)
 void timer_ms_init ( void (*ti) (void), float time)
 {
   my_timer = ti;					         // Pointer auf isr im User-Code (normalerweise: timer_ms_isr) !!
-  timer = timerBegin(timerNr,_DIVIDER_,true);
-  timerAlarmWrite(timer,calculate_alarm(time),true);
-  timerAttachInterrupt(timer,timer0_isr,true);
+  //timer = timerBegin(timerNr,_DIVIDER_,true);  // ESP-Arduino-IDF 2.0.x
+  //timerAlarmWrite(timer,calculate_alarm(time),true);
+  //timerAttachInterrupt(timer,timer0_isr,true);
+
+  int alarm = calculate_alarm(time);
+  timer = timerBegin(frequency);      // ab ESP-Arduin-IDF 3.0.x
+  timerAttachInterrupt(timer,&timer0_isr);
+  timerAlarm(timer,alarm,true,0);
+
+  #ifdef TIMER_DEBUG
+	  rs232_init();
+	  rs232_print("\n\rTimer init onTime: ");rs232_byte(time);
+	  rs232_print("\n\r        Frequency: ");rs232_int(timerGetFrequency(timer));
+	  rs232_print("\n\r       Resolution: ");rs232_int(alarm);
+	#endif
+  timerStop(timer);
 }
 
 void timer_ms_enable( void )
 {
   timerStart(timer);
-  timerAlarmEnable(timer);
+  //timerAlarmEnable(timer); // ESP-Arduino-IDF 2.0.x
+  #ifdef TIMER_DEBUG
+    rs232_print("\n\r       Timer Mode: ");rs232_print("START");
+	#endif
 }
 
 void timer_ms_disable( void )
 {
   timerStop(timer);
-  timerAlarmDisable(timer);
+  //timerAlarmDisable(timer); // ESP-Arduino-IDF 2.0.x
+  #ifdef TIMER_DEBUG
+    rs232_print("\n\r       Timer Mode: ");rs232_print("STOPP");    
+	#endif
 }
 
 // Ab hier keine FA205-Funktionen
@@ -218,7 +241,7 @@ void note_on(float frequenz)
   
   millisec = 500/frequenz;    // Zeit für Halbe Periodendauer in ms
   
-  timerAlarmWrite(timer,calculate_alarm(millisec),true);
+  timerAlarm(timer,calculate_alarm(millisec),true,0);
   //timer_ms_init(note_isr, millisec);
   timer_ms_enable();
 }
