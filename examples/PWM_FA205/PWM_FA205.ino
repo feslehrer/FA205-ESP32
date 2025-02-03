@@ -21,16 +21,25 @@
 void setup()
 { 
   pwm_init();
+  
+  
+  for(uint n = 1; n<10;n++)
+  {
+	  for(uint8_t i=0; i<2;i++)
+	  {
+		  pwm_start();
+		  delay_ms(1000);
+		  pwm_stop();
+		  delay_ms(500); 
+	  }
+	  pwm_duty_cycle(20*n);
+  }
+  
 }
 
 void loop()
 {	
-  pwm_duty_cycle(64);      //Tastgrad=25% setzen
-  pwm_start();
-  delay_ms(5000);
-  pwm_stop();
   
-  while(1);   // Endlos
 }
 
 /*
