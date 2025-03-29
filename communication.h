@@ -14,9 +14,15 @@
 //*************************************************************
 //Globale Definitionen
 // ... für I2C-Funktionen
-#define _I2C_FREQUENZ_ 40000      // 40kHz (reicht für die meisten Anwendungen gut)
-#define _I2C_MAX_DATAREAD_ 5      // maximale Anzahl von Bytes die in einem Lesezyklus gelesen werden können.
-extern uint8_t i2c_data[];        // Vom Slave gelesene Daten werden in hier übergeben.
+#define _SOFT_I2C_
+//#define _HARD_I2C_
+
+#ifdef _HARD_I2C_
+ #define _I2C_FREQUENZ_ 40000      // 40kHz (reicht für die meisten Anwendungen gut)
+ #define _I2C_MAX_DATAREAD_ 5      // maximale Anzahl von Bytes die in einem Lesezyklus gelesen werden können.
+ extern uint8_t i2c_data[];        // Vom Slave gelesene Daten werden in hier übergeben.
+#endif
+
 #define ACK  0
 #define NACK 1
 

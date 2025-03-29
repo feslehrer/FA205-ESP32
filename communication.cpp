@@ -10,7 +10,7 @@
 #include "communication.h"
 #include <arduino.h>
 //#include "esp_log.h"
-#include "driver/i2c.h"
+//#include "driver/i2c.h"
 
 #ifdef _SERIALBT_
   #include "BluetoothSerial.h" 
@@ -18,6 +18,8 @@
 
 #endif
 
+// Ab hier Hardware-I2C-Funktionen
+#ifdef _HARD_I2C_
 // *****************************************************************************************
 // I2C- Routinen zur Ansteuerung eins I2C-Slaves
 // I2C-Bus-Funktionen i2c_init, i2c_start, i2c_stop, i2c_write, i2c_read, i2c_ack, i2c_nack
@@ -120,6 +122,153 @@ uint8_t i2c_read (uint8_t ack)
 
   return i;          // ret Anzahl Index auf Datenpuffer
 }
+#endif
+
+// Ab hier Soft-I2C
+#ifdef _SOFT_I2C_
+
+//Globale Definitionen
+// ... für I2C-Funktionen
+#define SDA  21
+#define SCL  22
+
+// ****************************************************************************
+// I2C- Routinen zur Ansteuerung eins I2C-Slaves
+// I2C-Bus-Funktionen i2c_init, i2c_start, i2c_stop, i2c_write, i2c_read
+// ****************************************************************************
+
+// **** Zeitverzögerung zur Verlangsamung der Datenübertragungsrate ***********
+// **** i=2 bis i=100 wählen je nach I2C-IC und Pull-Up-Widerstand
+void i2c_delay(void) 
+{
+  volatile uint8_t i;	         // i nicht rausoptimieren (volatile)!!
+  for (i=5;i!=0;i--);
+}
+
+// ****************************************************************************
+// ****** Initialiserung I2C-Bus **********************************************
+void i2c_init (void)
+{ // Leitungen in den Grundzustand High
+  pinMode(SDA,OUTPUT);
+  digitalWrite(SDA,HIGH);
+  pinMode(SCL,OUTPUT);
+  digitalWrite(SCL,HIGH);
+  i2c_delay();
+  
+//  I2C_PORT |= (1<<SDA);                  // Leitungen in den Grundzustand High
+//  i2c_delay();
+//  I2C_PORT |= (1<<SCL);
+//  i2c_delay();
+}
+	 
+// ****** Startbedingung I2C-Bus **********************************************
+void i2c_start (void)
+{
+  //pinMode(SDA,OUTPUT);
+  digitalWrite(SDA,HIGH);
+  digitalWrite(SCL,HIGH);
+  i2c_delay();
+  digitalWrite(SDA,LOW);
+  i2c_delay();
+  digitalWrite(SCL,LOW);
+  i2c_delay();
+}
+
+//****** Stoppbedingung I2C-Bus ***********************************************************
+void i2c_stop (void)
+{
+  //pinMode(SDA,OUTPUT);
+  digitalWrite(SDA,LOW);
+  digitalWrite(SCL,HIGH);
+  i2c_delay();
+  digitalWrite(SDA,HIGH);
+  i2c_delay();
+}
+
+//*****************************************************************************************
+// * Byte ausgeben an I2C-Bus , Rückgabewert = ack = ACK/NACK 
+// * msb-first	
+// ****************************************************************************************
+uint8_t i2c_write (uint8_t value)
+{
+  uint8_t z;                             // Zähler 																	
+  uint8_t ack;                           // Acknoledge-Bit															
+
+  //pinMode(SDA,OUTPUT);
+  
+  for (z = 8; z != 0; z --)              // Zähler: serielle Ausgabe von 8 Bit								
+  {	
+    if ((value & 0x80) == 0x80)          // Ausgabe: MSB first
+	  digitalWrite(SDA,HIGH);           // SDA = 1;
+    else
+	  digitalWrite(SDA,LOW);	        // SDA = 0;
+		
+    value <<=1;                          // nächstes Bit!	
+		
+    i2c_delay();
+	digitalWrite(SCL,HIGH);             // SCL = 1 Daten sind gültig			
+    i2c_delay();
+	digitalWrite(SCL,LOW);	            // SCL = 0 Datenausabe beendet													
+    i2c_delay();
+  }
+  digitalWrite(SDA,HIGH);		        // SDA = 1 Leitung freigeben für Acknoledge-Bit								
+  i2c_delay();
+  digitalWrite(SCL,HIGH);				// SCL = 1 Slave kann bestätigen													
+  i2c_delay();                           // warten
+
+  pinMode(SDA,INPUT);
+  ack =   digitalRead(SDA);
+		
+  i2c_delay();
+  digitalWrite(SCL,LOW);                // SCL = 0 Slave soll Ackn-Ausgabe beenden
+  i2c_delay();									
+  pinMode(SDA,OUTPUT);
+  
+  return ack;                            // Acknoledge-Bit ist Rückgabewert der Funktion	
+                                         // ack = 0 bedeutet Slave hat "verstanden" !!!!!!						
+}
+
+//*****************************************************************************************
+// * Byte einlesen vom I2C-Bus.
+// ****************************************************************************************
+uint8_t i2c_read (uint8_t ack)
+{
+  uint8_t z, value = 0;
+
+  digitalWrite(SDA,HIGH);				// SDA = 1  Leitung freigeben (high) für Daten						
+
+  pinMode(SDA,INPUT);
+  for (z = 8; z != 0; z--)                // Zähler: serielles Einlesen von 8 Bit					
+  {
+	digitalWrite(SCL,HIGH);				// SCL = 1  Daten sind gültig	             											
+    i2c_delay();
+
+    value <<= 1;
+    value |= digitalRead(SDA);			//SDA   Datenbit in Puffer
+
+    i2c_delay();
+	digitalWrite(SCL,LOW);                // SCL = 0  Daten lesen beendet
+    i2c_delay();										
+  }
+  
+  pinMode(SDA,OUTPUT);
+  digitalWrite(SDA,ACK);				// Acknoledge-Bit
+  
+  i2c_delay();		
+  digitalWrite(SCL,HIGH);				// SCL = 1  Ackn. gültig
+  //I2C_PORT |= (1<<SCL);                   													
+  i2c_delay();
+  digitalWrite(SCL,LOW);                // SCL = 0  Ackn. beendet
+  i2c_delay();
+  digitalWrite(SDA,LOW);                // SDA = 0  Leitung SDA vorbereiten für Stoppbed.
+  i2c_delay();
+
+  return ( value );                       // eingelesenes Byte = Rückgabewert													
+}
+
+#endif
+
+
 
 // ****************************************************************************
 // RS232-Routinen zur Kommunikation mit PC-Terminal
