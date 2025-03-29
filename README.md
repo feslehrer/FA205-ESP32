@@ -69,6 +69,25 @@ Zu beachten ist, dass ein sogenannter **Repeated-Start** ohne **i2c_stop()** nur
 Das dekodierte Signal auf dem I2C-Bus stimmt mit dem Übertragungsprotokoll im Datenblatt überein:
 <img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/03f29c73-361f-4601-beec-0a0540069e8a" alt="Decodiertes I²C-Signal LM75" width="800">
 
+### Neu: 
+I2C-Funktionen sind nun alternativ auch als Software-I2C implementiert. In **communication.h** muss dafür der entsprechende Schalter aktiviert werden:
+```c
+#define _SOFT_I2C_
+//#define _HARD_I2C_
+```
+Damit kann dann vollständig konform zur Technischen Richtlinie FA205 programmiert werden:
+```c
+  i2c_start();                // Startbedingung
+  i2c_write(ADDR_W);          // Schreibwunsch an LM75 senden
+  i2c_write(0x00);            // Pointerbyte auf 0 setzen
+  
+  i2c_start();                   // Der repeated Start funktioniert hier auch
+  i2c_write(ADDR_R);             // Lesewunsch an LM75 senden
+  uint8_t msb = i2c_read(ACK);        // Erster Wert in Variable msb
+  uint8_t lsb = i2c_read(NACK);       // Zweiter Wert in Variable lsb
+  i2c_stop();                    // Stoppbedingung
+```
+
 ## ESP32-Carrier-Board von AS-Elektronik
 <img src="https://user-images.githubusercontent.com/24614659/235747329-3b294437-124a-4d40-9fe2-bfb1395ae811.jpg" alt="ESP32-Carrier-Board" width="600">
 <a href="https://ase-schlierbach.de/produkt/esp32-carrier-board-v1-5/" target="_blank">www.ase-schlierbach.de</a>
