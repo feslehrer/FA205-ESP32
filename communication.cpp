@@ -142,7 +142,7 @@ uint8_t i2c_read (uint8_t ack)
 void i2c_delay(void) 
 {
   volatile uint8_t i;	         // i nicht rausoptimieren (volatile)!!
-  for (i=5;i!=0;i--);
+  for (i=20;i!=0;i--);
 }
 
 // ****************************************************************************
