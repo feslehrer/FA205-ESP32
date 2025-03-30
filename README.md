@@ -165,11 +165,12 @@ void lcd_int       ( uint16_t value  );                 // dito.
 // I2C-Schnittstelle
 void    i2c_init    ( void );                   // Initialisierung
 void    i2c_start   ( void );                   // Startbedingung
-void    i2c_rstart  ( void );                   // Repeatet-Start. Vorherige Befehlsqueue wird ohne
+void    i2c_rstart  ( void );                   // Nur Hardware-I2C !!!
+                                                // Repeatet-Start. Vorherige Befehlsqueue wird ohne
                                                 // Stoppbedingung gesendet und eine erneute Startbedingung erzeugt.
-void    i2c_stop    ( void );                   // Befehlsqueue wird gesendet.
-uint8_t i2c_write   ( uint8_t value);           // value = Byte (8-Bit). Rückgabe: ACK/NACK
-uint8_t i2c_read    ( uint8_t ack );            // ack = ACK/NACK.       Rückgabe: Index auf i2c_data[]
+void    i2c_stop    ( void );                   // Stoppbedingung. Hardware-I2C: Befehlsqueue wird gesendet.
+uint8_t i2c_write   ( uint8_t value);           // value = Byte (8-Bit). Rückgabe: ACK(0)/NACK(1)
+uint8_t i2c_read    ( uint8_t ack );            // ack = ACK(0)/NACK(1).  Hardware-I2C: Rückgabe: Index auf i2c_data[]
 
 // RS232-Schnittstelle
 void    rs232_init  ( void );                   // In communication.h:
