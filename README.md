@@ -48,8 +48,33 @@ alternativ:
 ```c
 lcd_print ( "Hallo Welt" );
 ```
-+ Die i2c-Routinen für die Kommunikation auf dem I2C-Bus sind in der Technischen Richtlinie so aufgebaut, dass der Elektroniker das Übertragungsprotokoll aus dem Datenblatt eines IC direkt nachbilden kann. Da die Arduino-Wire-Bibliothek eine solche Vorgehensweise nicht zulässt, wurden die i2c-Funktionen mit der **Espressif-IDF** realisiert. Die Wire-Bibliothek darf daher nicht verwendet werden. Ebenso wird für das I2C-LCD keine weitere Bibliothek benötigt.
-Zu beachten ist, dass ein sogenannter **Repeated-Start** ohne **i2c_stop()** nur mit der - nicht richtlinienkonformen - Funktion **i2c_rstart()** funktioniert. Da die Espressif-IDF mit einer Befehlsqueue arbeitet, wird ein mit i2c_start() eingeleiteter Übertragungsrahmen erst mit einem i2c_stop() oder bei i2c_rstart() physikalisch auf dem Bus erscheinen. Problematisch wird dies beim Lesen vom Slave. Hier übergibt die Funktion **i2c_read()** nicht die gelesenen Daten (weil der Befehl erst in die Befehlsqueue geschrieben wird), sondern nur einen Index auf das Array **i2c_data[]**. Das Beispiel unten soll die Vorgehensweise verdeutlichen:
+#### I2C: 
+Die Implementierung der I2C-Funktionen in der Technischen Richtlinie ist so aufgebaut, dass der Elektroniker das Protokoll entsprechend dem Datenblatt nachbilden kann. Dies lässt sich mit den Funktionen der Arduino Wire-Bibliothek nicht realisieren. Hier wurde wahlweise eine Richtlinien-konforme Implementierung in Software und eine (etwas abweichende) Implementierung unter Benutzung der Esspressif IDF realisiert. Die Arduino-Wire-Bibliothek kann nicht parallel verwendet werden. Auch das I2C-LCD benötigt keine weitere Bibliothek.
++ Die Wahl zwischen Soft-I2C-Funktionen (default) und Hardware-I2C erfolgt mit den entsprechenden Schaltern in **communication.h**:
+```c
+#define _SOFT_I2C_       // Default !!
+//#define _HARD_I2C_
+```
+Damit kann dann vollständig konform zur Technischen Richtlinie FA205 programmiert werden:
+```c
+  i2c_start();                // Startbedingung
+  i2c_write(ADDR_W);          // Schreibwunsch an LM75 senden
+  i2c_write(0x00);            // Pointerbyte auf 0 setzen
+  
+  i2c_start();                   // Der repeated Start funktioniert hier auch
+  i2c_write(ADDR_R);             // Lesewunsch an LM75 senden
+  uint8_t msb = i2c_read(ACK);        // Erster Wert in Variable msb
+  uint8_t lsb = i2c_read(NACK);       // Zweiter Wert in Variable lsb
+  i2c_stop();                    // Stoppbedingung
+```
+
+Zur Nutzung der I2C-Hardware-Funktionen müssen die Schalter in **communication.h** entsprechend geändert werden:
+```c
+//#define _SOFT_I2C_
+#define _HARD_I2C_
+```
++ Bei Nutzung der Hardware-Funktionen müssen die folgenden Änderungen zur Technischen Richtlinie beachtet werden:
+<br>Die Hardware-Funktionen wurden mit der **Espressif-IDF** realisiert. Da die Espressif-IDF mit einer Befehlsqueue arbeitet, wird ein mit **i2c_start()** eingeleiteter Übertragungsrahmen erst mit einem i2c_stop() oder bei i2c_rstart() physikalisch auf dem Bus erscheinen. Problematisch wird dies beim Lesen vom Slave. Hier übergibt die Funktion **i2c_read()** nicht die gelesenen Daten (weil der Befehl erst in die Befehlsqueue geschrieben wird), sondern nur einen Index auf das Array **i2c_data[]**. Das Beispiel unten soll die Vorgehensweise verdeutlichen:
 ```c
   i2c_start();                // Startbedingung
   i2c_write(ADDR_W);          // Schreibwunsch an LM75 senden
@@ -66,27 +91,9 @@ Zu beachten ist, dass ein sogenannter **Repeated-Start** ohne **i2c_stop()** nur
   msb = i2c_data[msb]; 
   lsb = i2c_data[lsb];
 ```
+Zu beachten ist, dass ein sogenannter **Repeated-Start** ohne **i2c_stop()** nur mit der - nicht richtlinienkonformen - Funktion **i2c_rstart()** funktioniert.
 Das dekodierte Signal auf dem I2C-Bus stimmt mit dem Übertragungsprotokoll im Datenblatt überein:
 <img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/03f29c73-361f-4601-beec-0a0540069e8a" alt="Decodiertes I²C-Signal LM75" width="800">
-
-### Neu: 
-I2C-Funktionen sind nun alternativ auch als Software-I2C implementiert. In **communication.h** muss dafür der entsprechende Schalter aktiviert werden:
-```c
-#define _SOFT_I2C_
-//#define _HARD_I2C_
-```
-Damit kann dann vollständig konform zur Technischen Richtlinie FA205 programmiert werden:
-```c
-  i2c_start();                // Startbedingung
-  i2c_write(ADDR_W);          // Schreibwunsch an LM75 senden
-  i2c_write(0x00);            // Pointerbyte auf 0 setzen
-  
-  i2c_start();                   // Der repeated Start funktioniert hier auch
-  i2c_write(ADDR_R);             // Lesewunsch an LM75 senden
-  uint8_t msb = i2c_read(ACK);        // Erster Wert in Variable msb
-  uint8_t lsb = i2c_read(NACK);       // Zweiter Wert in Variable lsb
-  i2c_stop();                    // Stoppbedingung
-```
 
 ## ESP32-Carrier-Board von AS-Elektronik
 <img src="https://user-images.githubusercontent.com/24614659/235747329-3b294437-124a-4d40-9fe2-bfb1395ae811.jpg" alt="ESP32-Carrier-Board" width="600">
