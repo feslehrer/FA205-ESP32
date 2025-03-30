@@ -36,20 +36,22 @@ void loop(void)
 **Anmerkung:** Im Boardmanager muss das ESP32 Boardpackage installiert sein. Als Board wird **ESP32 PICO-D4** ausgewählt.
 ## Implementierung für Arduino-IDE
 Die Richtlinien-Funktionen mussten für die Verwendung in der Arduino-IDE leicht modifiziert werden. Die Änderungen sind im einzelnen:
+#### 8-Bit-Ports (Byte): 
 + Da der ESP32 keine 8 Bit-Ports mehr besitzt, wurden 8 Pins zum **PORTx** zusammengefasst, damit die 8 LEDs auf dem ESP32-Carrier-Board mit einem einzigen Byte-Zugriff geschrieben werden können. 8 weitere Pins wurden zum **PORTy** zusammengefasst. Hier befinden sich u.a. die 4 Taster des ESP32-Carrier-Boards (siehe unten).
+#### Zeichenketten: 
 + Abweichend von der Definition in der Technischen Richtlinie müssen für die Funktionen **lcd_print()** und **rs232_print()** konstante Zeichenketten vom Typ **char** und nicht **uint8_t** übergeben werden.
-<tab indent=20>```c
-char text[] = "Hallo Welt";     // Definition als char und nicht uint8_t
-
-lcd_print ( text );
-rs232_print ( text );
-```
-alternativ:
-```c
-lcd_print ( "Hallo Welt" );
-```
-#### I2C: 
-Die Implementierung der I2C-Funktionen in der Technischen Richtlinie ist so aufgebaut, dass der Elektroniker das Protokoll entsprechend dem Datenblatt nachbilden kann. Dies lässt sich mit den Funktionen der Arduino Wire-Bibliothek nicht realisieren. Hier wurde wahlweise eine Richtlinien-konforme Implementierung in Software und eine (etwas abweichende) Implementierung unter Benutzung der Esspressif IDF realisiert. Die Arduino-Wire-Bibliothek kann nicht parallel verwendet werden. Auch das I2C-LCD benötigt keine weitere Bibliothek.
+  ```c
+  char text[] = "Hallo Welt";     // Definition als char und nicht uint8_t
+  
+  lcd_print ( text );
+  rs232_print ( text );
+  ```
+  alternativ:
+  ```c
+  lcd_print ( "Hallo Welt" );
+  ```
+#### I2C:  
+  Die Implementierung der I2C-Funktionen in der Technischen Richtlinie ist so aufgebaut, dass der Elektroniker das Protokoll entsprechend dem Datenblatt nachbilden kann. Dies lässt sich mit den Funktionen der Arduino Wire-Bibliothek nicht realisieren. Hier wurde wahlweise eine Richtlinien-konforme Implementierung in Software und eine (etwas abweichende) Implementierung unter Benutzung der Esspressif IDF realisiert. Die Arduino-Wire-Bibliothek kann nicht parallel verwendet werden. Auch das I2C-LCD benötigt keine weitere Bibliothek.
 + Die Wahl zwischen Soft-I2C-Funktionen (default) und Hardware-I2C erfolgt mit den entsprechenden Schaltern in **communication.h**:
 ```c
 #define _SOFT_I2C_       // Default !!
