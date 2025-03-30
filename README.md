@@ -277,3 +277,5 @@ void setup (void)
 #endif
 ```
 Zusätzlich zum Standard-Interrupt **`ext_interrupt`** ist ein zweiter Interrupt **`ext_interrupt1`** implementiert. Beide haben die gleiche Funktionalität und Aufrufmethodik.
+
+Letzte Änderung: 2025.03.30@Rah
