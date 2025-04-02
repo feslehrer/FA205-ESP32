@@ -234,6 +234,7 @@ Prinzipiell ist die FA205_ESP32-Bibliothek auf allen ESP32-Controllern lauffähi
 //#define PWM_DEBUG
 //#define ADC_DEBUG
 //#define INT_DEBUG
+//#define TIMER_DEBUG
 //**********************************
 ```
 + Anpassungen in **_in_out.cpp_**
