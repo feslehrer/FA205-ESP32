@@ -33,7 +33,7 @@ void loop(void)
   delay_ms(500);             // 500ms warten
 }
 ```
-**Anmerkung:** Im Boardmanager muss das ESP32 Boardpackage installiert sein. Als Board wird **ESP32 PICO-D4** ausgewählt.
+**Anmerkung:** Im Boardmanager muss das ESP32 Boardpackage (ab Version 3.x) installiert sein. Als Board wird **ESP32 PICO-D4** ausgewählt.
 ## Implementierung für Arduino-IDE
 Die Richtlinien-Funktionen mussten für die Verwendung in der Arduino-IDE leicht modifiziert werden. Die Änderungen sind im einzelnen:
 #### 8-Bit-Ports (Byte): 
