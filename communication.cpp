@@ -154,11 +154,6 @@ void i2c_init (void)
   pinMode(SCL,OUTPUT);
   digitalWrite(SCL,HIGH);
   i2c_delay();
-  
-//  I2C_PORT |= (1<<SDA);                  // Leitungen in den Grundzustand High
-//  i2c_delay();
-//  I2C_PORT |= (1<<SCL);
-//  i2c_delay();
 }
 	 
 // ****** Startbedingung I2C-Bus **********************************************

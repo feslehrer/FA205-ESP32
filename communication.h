@@ -27,13 +27,13 @@
 #define NACK 1
 
 // ... für RS232-Funktionen
-/*#define BAUD  9600 //9600 //19200 //115200          //Baudraten können beliebig eingestellt werden.
+#define BAUD  9600 //9600 //19200 //115200          //Baudraten können beliebig eingestellt werden.
 #define _SERIAL0_  // _SERIAL0_ // _SERIAL1_ // _SERIALBT_
 
 #ifdef _SERIALBT_
  #define _DEVICENAME_ "myESP32"    // Hier eindeutigen Geätenamen definieren
 #endif
-*/
+
 //*************************************************************
 // Funktionsprototypen für I2C-Busschnittstelle (Master-Mode)
 extern void    i2c_init    ( void );
