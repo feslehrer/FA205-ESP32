@@ -38,9 +38,11 @@ void loop()
   adc_LByte = i2c_read(NACK);    // Low-Byte (Index) lesen
   i2c_stop();                    // Ab hier erscheinen die Signale auf dem Bus 
 
-  adc_HByte = i2c_data[adc_HByte];  // Daten aus Empfangs-Array holen 
-  adc_LByte = i2c_data[adc_LByte];
-  
+  #ifdef _HARD_I2C_
+   adc_HByte = i2c_data[adc_HByte];  // Daten aus Empfangs-Array holen 
+   adc_LByte = i2c_data[adc_LByte];
+  #endif
+
   sprintf(send_buf,"High: %X, Low: %X\r\n",adc_HByte,adc_LByte);
   rs232_print(send_buf);
 
@@ -49,8 +51,10 @@ void loop()
   adc_HByte = i2c_read(NACK);    // noch einmal nur High-Byte lesen
   i2c_stop();
   
-  adc_HByte = i2c_data[adc_HByte];  // Daten aus Empfangs-Array holen 
-
+  #ifdef _HARD_I2C_
+   adc_HByte = i2c_data[adc_HByte];  // Daten aus Empfangs-Array holen 
+  #endif
+  
   sprintf(send_buf,"High: %X\r\n",adc_HByte);
   rs232_print(send_buf);
   
