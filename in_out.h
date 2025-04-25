@@ -34,7 +34,7 @@ void    byte_init  ( uint8_t port, uint8_t direction );
 uint8_t byte_read  ( uint8_t port );
 void    byte_write ( uint8_t port, uint8_t value );
 
-//void    bit_toggle ( volatile uint8_t port, uint8_t bitnr, volatile uint8_t *status );
+void    bit_toggle ( uint8_t port, uint8_t bitnr, uint8_t *status );
 
 // Funktionsprototypen für PWM
 void    pwm_init   ( void );

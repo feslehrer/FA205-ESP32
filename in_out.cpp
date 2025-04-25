@@ -121,17 +121,18 @@ void byte_write(uint8_t byte_adr, uint8_t byte_wert)
     }
 }
 
-// void bit_toggle(volatile uint8_t *byte_adr, uint8_t bit_nr, volatile uint8_t *_bit_status_)
-// {
-//     if( !bit_read(byte_adr,bit_nr) )
-//     {
-//       delay_ms(20);                     // Entprellzeit
-//       while( !bit_read(byte_adr,bit_nr));
-//       delay_ms(20);
-//       *_bit_status_ = ~*_bit_status_;
-//       *_bit_status_ &= 0x01;                   // Bit 0 ausmaskieren!
-//     }
-// }
+// bit_toggle()-Funktion zum Schalten mit Taster und einfacher Tasterentprellung
+void bit_toggle(uint8_t byte_adr, uint8_t bit_nr, uint8_t *_bit_status_)
+{
+    if( !bit_read(byte_adr,bit_nr) )
+    {
+      delay_ms(20);                     // Entprellzeit
+      while( !bit_read(byte_adr,bit_nr));
+      delay_ms(20);
+      *_bit_status_ = ~*_bit_status_;
+      *_bit_status_ &= 0x01;                   // Bit 0 ausmaskieren!
+    }
+}
 
 //***************************************************************
 // ab hier PWM-Funktionen
