@@ -194,6 +194,8 @@ Prinzipiell ist die FA205_ESP32-Bibliothek auf allen ESP32-Controllern lauffähi
 <br>Das **Esprit-Controllermodul** wird auf der Unterseite auf das **Arduino-Carrier-Board** aufgesteckt.
 <br><img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/1935d178-62f1-49a2-b245-853cc01187dc" alt="Arduino-Carrier-Board-Board" width="300">
 <img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/c8fffa9f-23a3-4eda-9372-2e5476f1e71d" alt="Esprit-Board Huckepack" width="300">
+<img width="600" alt="ESP32_Esprit_Pinout" src="https://github.com/user-attachments/assets/65b90668-1eee-40b5-a5b9-657249fc4757" />
+
 <br><a href="https://ase-schlierbach.de/produkt/arduino-carrier-board_fertigprodukt/" target="_blank">www.ase-schlierbach.de</a>
 + Anpassungen in **_controller.h_**
 <br>Für die Kombination **Esprit-Board/Arduino-Carrier-Board** muss lediglich der Schalter **`_ESP32_ESPRIT_BOARD_`** entkommentiert werden und der Schalter **`_ESP32_CARRIER_BOARD_`** auskommentiert werden. Sind beide Schalter auskommentiert, gelten die **_Default-Einstellungen_**.
