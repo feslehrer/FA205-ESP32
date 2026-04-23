@@ -105,7 +105,7 @@ Die Implementierung der I2C-Funktionen in der Technischen Richtlinie ist so aufg
 ### FA205-Portbelegungen für ESP32-Carrier-Board
 Das ESP32-Carrier-Board ist mit den GPIO-Nummern bedruckt.
 Für die Technische Richtlinie müssen daher die GPIO-Nummern entsprechend dem abgebildeten Schema ersetzt werden:
-<img src="https://github.com/feslehrer/FA205-ESP32/assets/24614659/8bb2f964-ed43-4904-bf8d-113db8d25177" alt="FA205 Pinbelegung" width="800">
+<img width="800" alt="ESP32_Carrier_Pinout_FA205" src="https://github.com/user-attachments/assets/237ddbaa-cc0e-4fc6-83e2-470377a70795" />
 
 ### FA205-Prototypen:
 + **delay.h**
@@ -195,11 +195,11 @@ Prinzipiell ist die FA205_ESP32-Bibliothek auf allen ESP32-Controllern lauffähi
 <br>
 <img width="300" alt="Esprit_Board_Huckepack" src="https://github.com/user-attachments/assets/2ce10405-1721-44a5-a546-59e21842851b" />
 <img width="300" alt="Arduino_Carrier_Board" src="https://github.com/user-attachments/assets/32430b51-bd42-4302-baa6-bd23e2243c3c" />
-
 <br><a href="https://ase-schlierbach.de/produkt/arduino-carrier-board_fertigprodukt/" target="_blank">www.ase-schlierbach.de</a>
 + Anpassungen in **_controller.h_**
 <br>Für die Kombination **Esprit-Board/Arduino-Carrier-Board** muss lediglich der Schalter **`_ESP32_ESPRIT_BOARD_`** entkommentiert werden und der Schalter **`_ESP32_CARRIER_BOARD_`** auskommentiert werden. Sind beide Schalter auskommentiert, gelten die **_Default-Einstellungen_**.
-<br>Als erweiterte Einstellungen kann hier der Trigger für die beiden externen Interrupts gesetzt werden. Ebenso wird die Serielle Schnittstelle für die rs232-Richtlinienfunktionen hier gewählt. Bei der Wahl der seriellen Bluetooth-Verbindung **`_SERIALBT_`** ist zu beachten, dass ein eindeutiger Gerätenamen **`_DEVICENAME_`** vergeben wird. Dies ist insbesondere bei bei vielen Teilnehmern im Klassenzimmer/Labor wichtig. Weiterhin kann auch die **_Baudrate_** für die Serielle Schnittstelle geändert werden, sowie die Ausgabe von Debug-Meldungen für PWM, ADC, Externer Interrupt und Timer-Interrupt aktiviert werden.
+<br>Als erweiterte Einstellungen kann hier der Trigger für die b<img width="1200" height="789" alt="ESP32_Carrier_Pinout_FA205" src="https://github.com/user-attachments/assets/82791272-8e81-4e16-ab45-97dd7d44cd7e" />
+eiden externen Interrupts gesetzt werden. Ebenso wird die Serielle Schnittstelle für die rs232-Richtlinienfunktionen hier gewählt. Bei der Wahl der seriellen Bluetooth-Verbindung **`_SERIALBT_`** ist zu beachten, dass ein eindeutiger Gerätenamen **`_DEVICENAME_`** vergeben wird. Dies ist insbesondere bei bei vielen Teilnehmern im Klassenzimmer/Labor wichtig. Weiterhin kann auch die **_Baudrate_** für die Serielle Schnittstelle geändert werden, sowie die Ausgabe von Debug-Meldungen für PWM, ADC, Externer Interrupt und Timer-Interrupt aktiviert werden.
 ```c
 /*********************************
 // Board-Typ
