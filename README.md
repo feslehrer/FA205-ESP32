@@ -105,7 +105,7 @@ Die Implementierung der I2C-Funktionen in der Technischen Richtlinie ist so aufg
 ### FA205-Portbelegungen für ESP32-Carrier-Board
 Das ESP32-Carrier-Board ist mit den GPIO-Nummern bedruckt.
 Für die Technische Richtlinie müssen daher die GPIO-Nummern entsprechend dem abgebildeten Schema ersetzt werden:
-<img width="600" alt="ESP32_Carrier_Pinout_FA205" src="https://github.com/user-attachments/assets/e08bcf70-5d8f-4f36-9d38-e621648783ec" />
+<br><img width="600" alt="ESP32_Carrier_Pinout_FA205" src="https://github.com/user-attachments/assets/e08bcf70-5d8f-4f36-9d38-e621648783ec" />
 
 ### FA205-Prototypen:
 + **delay.h**
