@@ -271,7 +271,7 @@ uint8_t lcd_lookup(uint8_t ascii)
 /***********************************************************************************
  * Pixelweise Definition eigener LCD-Zeichen, Ablegen von max 7 Zeichen im CG-RAM des LCD
  ***********************************************************************************/
-void lcd_defchar (uint8_t *pix_tab, uint8_t char_nr)
+void lcd_defchar (const char *pix_tab, uint8_t char_nr)
 {
   uint8_t i;
 	
