@@ -114,7 +114,6 @@ lcd_init	KEYWORD2
 lcd_clear	KEYWORD2
 lcd_setcursor	KEYWORD2
 lcd_print	KEYWORD2
-lcd_print	KEYWORD2
 lcd_char	KEYWORD2
 lcd_byte	KEYWORD2
 lcd_int	KEYWORD2
